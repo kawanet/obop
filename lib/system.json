@@ -1,6 +1,6 @@
 {
   "name": "obop",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "update": {
     "$set": 1,
     "$unset": 1,

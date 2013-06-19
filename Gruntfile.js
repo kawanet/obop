@@ -105,7 +105,7 @@ module.exports = function(grunt) {
       },
       system: {
         src: 'package.json',
-        dest: 'lib/version.json',
+        dest: 'lib/system.json',
         options: {
           fields: {
             name: 1,
@@ -117,6 +117,6 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('default', ['jshint', 'mochaTest']);
-  grunt.registerTask('bundle', ['quoteJson', 'browserify', 'uglify']);
-  grunt.registerTask('all', ['default', 'jsdoc', 'bundle']);
+  grunt.registerTask('build', ['quoteJson', 'browserify', 'uglify']);
+  grunt.registerTask('all', ['default', 'jsdoc', 'build']);
 };
