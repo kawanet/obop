@@ -25,9 +25,9 @@
  * &lt;/script&gt;
  */
 
-function obop() {
-  if (!(this instanceof obop)) return new obop();
-  this.settings = {};
+function obop(settings) {
+  if (!(this instanceof obop)) return new obop(settings);
+  this.settings = settings || {};
 }
 
 function system() {
