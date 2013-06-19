@@ -17,7 +17,7 @@ var out = src.filter(func);
 ### Browser Envorinment
 
 ```html
-<script src="obop.js"></script>
+<script src="obop.min.js"></script>
 <script>
   var src = [ { a: 1 }, { a: 2 }, { a: 3 } ];
   var func = obop.where( { a: 2 } );
@@ -28,20 +28,27 @@ var out = src.filter(func);
 
 ## INSTALLATION
 
-### Node.js Environment
-
 ```sh
 npm install git://github.com/kawanet/obop.git
 ```
 
-### Browser Environment
+## LINKS
 
-- Download minified version:
-  https://raw.github.com/kawanet/obop/master/build/obop.min.js
+### Browser Build
 
-## AUTHOR
+https://raw.github.com/kawanet/obop/master/build/obop.min.js
 
-- https://github.com/kawanet
+### Documentation
+
+http://kawanet.github.io/obop/docs/obop.html
+
+### Sources
+
+https://github.com/kawanet/obop
+
+### Author
+
+https://github.com/kawanet
 
 ## LICENCE
 
