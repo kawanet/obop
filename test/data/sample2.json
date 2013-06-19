@@ -1,0 +1,21 @@
+[
+  { "name": "empty" },
+
+  { "name": "integral", "arr": 1234 },
+
+  { "name": "string", "arr": "foobar" },
+
+  { "name": "null", "arr": null },
+
+  { "name": "object", "arr": {} },
+
+  { "name": "array0", "arr": [] },
+
+  { "name": "array1", "arr": [ 1234 ] },
+
+  { "name": "array2", "arr": [ "foobar" ] },
+
+  { "name": "array3", "arr": [ 111, 222, 222, 333, 333, 444 ] },
+
+  { "name": "array4", "arr": [ "foo", "bar", "bar", "baz", "baz", "qux" ] }
+]

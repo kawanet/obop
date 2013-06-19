@@ -1,0 +1,12 @@
+{
+  "name": "obop",
+  "version": "0.0.1",
+  "update": {
+    "$set": 1,
+    "$unset": 1,
+    "$rename": 1,
+    "$push": 1,
+    "$pull": 1,
+    "$inc": 1
+  }
+}

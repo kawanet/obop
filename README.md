@@ -1,12 +1,49 @@
 # obop
 
-Operation Operator Translators
+MongoDB-like Object Operator Translators for JavaScript Array Manipulation
 
-## Author
+## SYNOPSIS
 
-- @kawanet
+### Node.js Environment
 
-## MIT Licence
+```js
+var obop = require('obop')();
+var src = [ { a: 1 }, { a: 2 }, { a: 3 } ];
+var func = obop.where( { a: 2 } );
+var out = src.filter(func);
+// => [ { a: 2 } ]
+```
+
+### Browser Envorinment
+
+```html
+<script src="obop.js"></script>
+<script>
+  var src = [ { a: 1 }, { a: 2 }, { a: 3 } ];
+  var func = obop.where( { a: 2 } );
+  var out = src.filter(func);
+  // => [ { a: 2 } ]
+</script>
+```
+
+## INSTALLATION
+
+### Node.js Environment
+
+```sh
+npm install git://github.com/kawanet/obop.git
+```
+
+### Browser Environment
+
+- Download minified version:
+  https://raw.github.com/kawanet/obop/master/build/obop.min.js
+
+## AUTHOR
+
+- https://github.com/kawanet
+
+## LICENCE
 
 Copyright 2013 @kawanet
 

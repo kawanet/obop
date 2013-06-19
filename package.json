@@ -1,0 +1,32 @@
+{
+  "name": "obop",
+  "version": "0.0.1",
+  "description": "MongoDB-like Object Operator Translators for JavaScript Array Manipulation",
+  "main": "index.js",
+  "devDependencies": {
+    "chai": "~1.7.0",
+    "grunt": "~0.4.1",
+    "grunt-browserify": "~1.0.5",
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-uglify": "~0.2.2",
+    "grunt-contrib-watch": "~0.4.4",
+    "grunt-jsdoc": "~0.3.3",
+    "grunt-mocha-test": "~0.4.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/kawanet/obop.git"
+  },
+  "keywords": [
+    "array",
+    "map",
+    "filter",
+    "sort",
+    "mongodb"
+  ],
+  "author": "https://github.com/kawanet",
+  "license": "MIT"
+}

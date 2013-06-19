@@ -1,0 +1,11 @@
+[
+   { "name": "alpha",   "integral": 1234, "numeric": 11.11 },
+   { "name": "bravo",   "integral": 2345, "numeric": 33.33 },
+   { "name": "charlie", "integral": 3456, "numeric": 33.33 },
+   { "name": "delta",   "integral": 4567, "numeric": 22.22 },
+   { "name": "echo",    "integral": 5678, "numeric": 22.22 },
+   { "name": "foxtrot", "integral": 4567, "numeric": 22.22 },
+   { "name": "hotel",   "integral": 3456, "numeric": 11.11 },
+   { "name": "india",   "integral": 2345, "numeric": 11.11 },
+   { "name": "juliet",  "integral": 1234, "numeric": 11.11 }
+]
