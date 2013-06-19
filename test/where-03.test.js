@@ -62,6 +62,25 @@ function tests1(sample) {
       return item.numeric <= 22.22;
     });
 
+    wheretest(sample, {
+      "name": {
+        $ne: "juliet"
+      }
+    }, function(item) {
+      return item.name != "juliet";
+    });
+
+    wheretest(sample, {
+      "integral": {
+        $not: {
+          $lt: 4000
+        }
+      }
+    }, function(item) {
+      var b = (item.integral < 4000);
+      return !b;
+    });
+
   };
 }
 
@@ -104,6 +123,18 @@ function tests2(sample) {
 
 function tests3(sample) {
   return function() {
+
+    wheretest(sample, {
+      "a.b": {
+        $not: {
+          $gte: 2
+        }
+      }
+    }, function(item) {
+      var a = item.a || {};
+      var b = (a.b >= 2);
+      return !b;
+    });
 
     wheretest(sample, {
       "a.b": {
