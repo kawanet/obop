@@ -12,10 +12,15 @@ function updatetest(sample, update, tester, mess) {
   mess = mess || JSON.stringify(update);
   it(mess, function(done) {
     var updater = obop.update(update);
-    assert.equal(typeof updater, 'function', 'updater should be a function');
-    var actual = clone(sample).filter(updater);
-    var expect = clone(sample).filter(tester);
-    assert.deepEqual(actual, expect);
+    assert.notOk(updater instanceof Error, 'update() should not return an error: ' + updater);
+    if (tester) {
+      assert.ok('function' == typeof updater, 'updater should be a function but ' + typeof updater);
+      var actual = clone(sample).filter(updater);
+      var expect = clone(sample).filter(tester);
+      assert.deepEqual(actual, expect);
+    } else {
+      assert.notOk(updater, 'updater should be empty but ' + updater);
+    }
     done();
   });
 }
@@ -122,10 +127,10 @@ function tests(sample) {
     });
 
     // null
-    updatetest(sample, null, through);
+    updatetest(sample, null, null);
 
     // empty object
-    updatetest(sample, {}, through);
+    updatetest(sample, {}, null);
 
     // function
     updatetest(sample, through, through, '[Function]');

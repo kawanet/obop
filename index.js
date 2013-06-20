@@ -26,6 +26,7 @@
  */
 
 var $where = require('./lib/dollar_where');
+var $update = require('./lib/dollar_update');
 
 function obop(settings) {
   if (!(this instanceof obop)) return new obop(settings);
@@ -38,6 +39,7 @@ obop.order = obop.prototype.order = require('./lib/order.js').order;
 obop.update = obop.prototype.update = require('./lib/update.js').update;
 obop.system = obop.prototype.system = require('./lib/system.json');
 obop.$where = obop.prototype.$where = new $where();
+obop.$update = obop.prototype.$update = new $update();
 obop.settings = obop.prototype.settings = {};
 
 module.exports = obop;

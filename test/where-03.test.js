@@ -15,7 +15,7 @@ function wheretest(sample, where, tester, mess) {
   it(mess, function(done) {
     var selector = obop.where(where);
     if (tester) {
-      assert.notOk(selector instanceof Error, 'selector should not return an error: ' + selector);
+      assert.notOk(selector instanceof Error, 'where() should not return an error: ' + selector);
       assert.equal(typeof selector, 'function', 'selector should be a function');
       var actual = [].concat(sample).filter(selector);
       var expect = [].concat(sample).filter(tester);
