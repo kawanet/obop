@@ -15,6 +15,7 @@ function wheretest(sample, where, tester, mess) {
   it(mess, function(done) {
     var selector = obop.where(where);
     if (tester) {
+      assert.notOk(selector instanceof Error, 'selector should not return an error: ' + selector);
       assert.equal(typeof selector, 'function', 'selector should be a function');
       var actual = [].concat(sample).filter(selector);
       var expect = [].concat(sample).filter(tester);
@@ -68,6 +69,36 @@ function tests1(sample) {
       }
     }, function(item) {
       return item.name != "juliet";
+    });
+
+    wheretest(sample, {
+      $or: [{
+          integral: {
+            $lt: 2000
+          }
+        }, {
+          numeric: {
+            $gt: 30.00
+          }
+        }
+      ]
+    }, function(item) {
+      return item.integral < 2000 || item.numeric > 30;
+    });
+
+    wheretest(sample, {
+      $and: [{
+          integral: {
+            $gt: 2000
+          }
+        }, {
+          numeric: {
+            $lt: 30.00
+          }
+        }
+      ]
+    }, function(item) {
+      return item.integral > 2000 && item.numeric < 30;
     });
 
     wheretest(sample, {
