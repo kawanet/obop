@@ -25,22 +25,19 @@
  * &lt;/script&gt;
  */
 
+var $where = require('./lib/dollar_where');
+
 function obop(settings) {
   if (!(this instanceof obop)) return new obop(settings);
   this.settings = settings || {};
 }
 
-function system() {
-  if (!(this instanceof system)) return new system();
-}
-
-system.prototype = require('./lib/system.json');
-
 obop.where = obop.prototype.where = require('./lib/where.js').where;
 obop.view = obop.prototype.view = require('./lib/view.js').view;
 obop.order = obop.prototype.order = require('./lib/order.js').order;
 obop.update = obop.prototype.update = require('./lib/update.js').update;
-obop.system = obop.prototype.system = new system();
+obop.system = obop.prototype.system = require('./lib/system.json');
+obop.$where = obop.prototype.$where = new $where();
 obop.settings = obop.prototype.settings = {};
 
 module.exports = obop;
