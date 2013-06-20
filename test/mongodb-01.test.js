@@ -39,6 +39,7 @@ function main() {
   require('./where-02.test')('mongodb-01-', check_where);
   require('./where-03.test')('mongodb-01-', check_where);
   require('./view-01.test')('mongodb-01-', check_view);
+  require('./order-01.test')('mongodb-01-', check_order);
 }
 
 function check_where(sample, where, func, mess) {
@@ -54,20 +55,15 @@ function check_where(sample, where, func, mess) {
 }
 
 function mongodb_where(sample, where, tester, next) {
-  sample = common.clone(sample);
-  collection.remove(function(err) {
-    assert.equal(err, null);
-    collection.insert(sample, function(err) {
+  prepare(sample, function() {
+    collection.find(where, {
+      _id: 0
+    }).sort({
+      _id: 1
+    }).toArray(function(err, result) {
       assert.equal(err, null);
-      collection.find(where, {
-        _id: 0
-      }).sort({
-        _id: 1
-      }).toArray(function(err, result) {
-        assert.equal(err, null);
-        assert.ok(result instanceof Array, 'result should be an array');
-        next(result);
-      });
+      assert.ok(result instanceof Array, 'result should be an array');
+      next(result);
     });
   });
 }
@@ -89,22 +85,59 @@ function mongodb_view(sample, view, tester, next) {
   // at Collection.find (node_modules/mongodb/lib/mongodb/collection.js:814:28)
   view = view || {};
 
+  prepare(sample, function() {
+    collection.find({}, view).sort({
+      _id: 1
+    }).toArray(function(err, result) {
+      // console.error(result);
+      assert.equal(err, null);
+      assert.ok(result instanceof Array, 'result should be an array');
+      result.forEach(function(item) {
+        delete item._id;
+      });
+      next(result);
+    });
+  });
+}
+
+function check_order(sample, order, func, mess) {
+  mess = mess || JSON.stringify(order);
+  it(mess, function(done) {
+    common.obop_order(sample, order, func, function(actual) {
+      mongodb_order(sample, order, func, function(expect) {
+        assert.deepEqual(actual, expect);
+        done();
+      });
+    });
+  });
+}
+
+function mongodb_order(sample, order, tester, next) {
+  order = order || {};
+  if (!Object.keys(order).length) {
+    order = {
+      _id: 1
+    };
+  }
+  prepare(sample, function() {
+    collection.find({}, {
+      _id: 0
+    }).sort(order).toArray(function(err, result) {
+      // console.error(result);
+      assert.equal(err, null);
+      assert.ok(result instanceof Array, 'result should be an array');
+      next(result);
+    });
+  });
+}
+
+function prepare(sample, next) {
   sample = common.clone(sample);
   collection.remove(function(err) {
     assert.equal(err, null);
     collection.insert(sample, function(err) {
       assert.equal(err, null);
-      collection.find({}, view || {}).sort({
-        _id: 1
-      }).toArray(function(err, result) {
-        // console.error(result);
-        assert.equal(err, null);
-        assert.ok(result instanceof Array, 'result should be an array');
-        result.forEach(function(item) {
-          delete item._id;
-        });
-        next(result);
-      });
+      next();
     });
   });
 }

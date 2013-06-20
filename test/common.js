@@ -76,6 +76,53 @@ exports.expect_view = function(sample, view, func, next) {
   next(result);
 };
 
+exports.check_order = function(sample, order, func, mess) {
+  mess = mess || JSON.stringify(order);
+  it(mess, function(done) {
+    common.obop_order(sample, order, func, function(actual) {
+      common.expect_order(sample, order, func, function(expect) {
+
+        var view = {};
+        Object.keys(order || {}).forEach(function(key) {
+          view[key] = 1;
+        });
+        var projection = obop.view(view);
+        if (projection) {
+          actual = actual.map(projection);
+          expect = expect.map(projection);
+        }
+
+        assert.deepEqual(actual, expect);
+        done();
+      });
+    });
+  });
+};
+
+exports.obop_order = function(sample, order, func, next) {
+  sample = common.clone(sample);
+  var result = sample;
+  var sorter = obop.order(order);
+  assert.notOk(sorter instanceof Error, 'order() should not return an error: ' + sorter);
+  if (sorter) {
+    assert.equal(typeof sorter, 'function', 'sorter should be a function');
+    result = sample.sort(sorter);
+  }
+  assert.ok(result instanceof Array, 'obop result should be an array');
+  next(result);
+};
+
+exports.expect_order = function(sample, order, func, next) {
+  sample = common.clone(sample);
+  var result = sample;
+  if (func) {
+    assert.equal(typeof func, 'function', 'expecter should be a function');
+    result = sample.sort(func);
+  }
+  assert.ok(result instanceof Array, 'expecter result should be an array');
+  next(result);
+};
+
 exports.clone = function(obj) {
   return JSON.parse(JSON.stringify(obj));
 };
