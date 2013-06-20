@@ -1,5 +1,4 @@
 var assert = require('chai').assert;
-var MongoClient = require('mongodb').MongoClient;
 var common = require('./common');
 
 exports.DONT_RUN_TESTS_ON_REQUIRE = true;
@@ -17,6 +16,12 @@ describe('mongodb-01', function() {
   }
 
   it('connect: ' + url, function(done) {
+    var MongoClient;
+    try {
+      MongoClient = require('mongodb').MongoClient;
+    } catch (err) {
+      assert.equal(err, null);
+    }
     MongoClient.connect(url, function(err, db) {
       assert.equal(err, null);
       collection = db.collection(colName);
