@@ -8,14 +8,15 @@ describe('view-01', function() {
   describe('sample2', tests(sample2));
 });
 
-function viewtest(view, tester, mess) {
+function viewtest(sample, view, tester, mess) {
   mess = mess || JSON.stringify(view);
   it(mess, function(done) {
     var projection = obop.view(view);
+    assert.notOk(projection instanceof Error, 'view() should not return an error: ' + projection);
     if (tester) {
       assert.equal(typeof projection, 'function', 'projection should be a function');
-      var actual = [].concat(sample1).map(projection);
-      var expect = [].concat(sample1).map(tester);
+      var actual = clone(sample).filter(projection);
+      var expect = clone(sample).filter(tester);
       assert.deepEqual(actual, expect, mess);
     } else {
       assert.notOk(projection, 'projection should be empty');
@@ -24,10 +25,14 @@ function viewtest(view, tester, mess) {
   });
 }
 
+function clone(obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
+
 function tests(sample) {
   return function() {
 
-    viewtest({
+    viewtest(sample, {
       name: 1
     }, function(item) {
       return {
@@ -35,7 +40,7 @@ function tests(sample) {
       };
     });
 
-    viewtest({
+    viewtest(sample, {
       integral: 1,
       numeric: 1
     }, function(item) {
@@ -45,7 +50,7 @@ function tests(sample) {
       };
     });
 
-    viewtest({
+    viewtest(sample, {
       name: 1,
       integral: 1,
       numeric: 1
@@ -57,7 +62,7 @@ function tests(sample) {
       };
     });
 
-    viewtest({
+    viewtest(sample, {
       name: 0
     }, function(item) {
       return {
@@ -66,7 +71,7 @@ function tests(sample) {
       };
     });
 
-    viewtest({
+    viewtest(sample, {
       integral: 0,
       numeric: 0
     }, function(item) {
@@ -75,7 +80,7 @@ function tests(sample) {
       };
     });
 
-    viewtest({
+    viewtest(sample, {
       name: 0,
       integral: 0,
       numeric: 0
@@ -83,11 +88,11 @@ function tests(sample) {
       return {};
     });
 
-    viewtest(null, null);
+    viewtest(sample, null, null);
 
-    viewtest({}, null);
+    viewtest(sample, {}, null);
 
-    viewtest(_name, _name, '[Function]');
+    viewtest(sample, _name, _name, '[Function]');
   };
 }
 

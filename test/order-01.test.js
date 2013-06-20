@@ -8,14 +8,15 @@ describe('order-01', function() {
   describe('sample2', tests(sample2));
 });
 
-function ordertest(order, tester, mess) {
+function ordertest(sample, order, tester, mess) {
   mess = mess || JSON.stringify(order);
   it(mess, function(done) {
     var sorter = obop.order(order);
+    assert.notOk(sorter instanceof Error, 'order() should not return an error: ' + sorter);
     if (tester) {
       assert.equal(typeof sorter, 'function', 'sorter should be a function');
-      var actual = [].concat(sample1).sort(sorter);
-      var expect = [].concat(sample1).sort(tester);
+      var actual = clone(sample).filter(sorter);
+      var expect = clone(sample).filter(tester);
       var view = {};
       Object.keys(order).forEach(function(key) {
         view[key] = 1;
@@ -33,16 +34,20 @@ function ordertest(order, tester, mess) {
   });
 }
 
+function clone(obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
+
 function tests(sample) {
   return function() {
 
-    ordertest({
+    ordertest(sample, {
       name: 1
     }, function(a, b) {
       return ((a.name < b.name) ? -1 : (a.name > b.name) ? 1 : 0);
     });
 
-    ordertest({
+    ordertest(sample, {
       integral: 1,
       numeric: 1,
       name: 1
@@ -50,7 +55,7 @@ function tests(sample) {
       return (a.integral - b.integral) || (a.numeric - b.numeric) || ((a.name < b.name) ? -1 : (a.name > b.name) ? 1 : 0);
     });
 
-    ordertest({
+    ordertest(sample, {
       numeric: 1,
       integral: 1,
       name: 1
@@ -58,13 +63,13 @@ function tests(sample) {
       return (a.numeric - b.numeric) || (a.integral - b.integral) || ((a.name < b.name) ? -1 : (a.name > b.name) ? 1 : 0);
     });
 
-    ordertest({
+    ordertest(sample, {
       name: -1
     }, function(a, b) {
       return ((a.name < b.name) ? 1 : (a.name > b.name) ? -1 : 0);
     });
 
-    ordertest({
+    ordertest(sample, {
       integral: -1,
       numeric: -1,
       name: -1
@@ -72,7 +77,7 @@ function tests(sample) {
       return (b.integral - a.integral) || (b.numeric - a.numeric) || ((a.name < b.name) ? 1 : (a.name > b.name) ? -1 : 0);
     });
 
-    ordertest({
+    ordertest(sample, {
       numeric: -1,
       integral: -1,
       name: -1
@@ -80,9 +85,9 @@ function tests(sample) {
       return (b.numeric - a.numeric) || (b.integral - a.integral) || ((a.name < b.name) ? 1 : (a.name > b.name) ? -1 : 0);
     });
 
-    ordertest(null, null);
+    ordertest(sample, null, null);
 
-    ordertest({}, null);
+    ordertest(sample, {}, null);
 
     it('[Function]', function(done) {
       var expect = function() {};

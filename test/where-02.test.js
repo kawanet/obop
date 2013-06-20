@@ -10,17 +10,21 @@ function wheretest(sample, where, tester, mess) {
   mess = mess || JSON.stringify(where);
   it(mess, function(done) {
     var selector = obop.where(where);
+    assert.notOk(selector instanceof Error, 'where() should not return an error: ' + selector);
     if (tester) {
       assert.equal(typeof selector, 'function', 'selector should be a function');
-      var actual = [].concat(sample).filter(selector);
-      var expect = [].concat(sample).filter(tester);
+      var actual = clone(sample).filter(selector);
+      var expect = clone(sample).filter(tester);
       assert.deepEqual(actual, expect);
-      // console.error(actual.length);
     } else {
       assert.notOk(selector, 'selector should be empty');
     }
     done();
   });
+}
+
+function clone(obj) {
+  return JSON.parse(JSON.stringify(obj));
 }
 
 function tests(sample) {

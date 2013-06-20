@@ -8,14 +8,15 @@ describe('where-01', function() {
   describe('sample2', tests(sample2));
 });
 
-function wheretest(where, tester, mess) {
+function wheretest(sample, where, tester, mess) {
   mess = mess || JSON.stringify(where);
   it(mess, function(done) {
     var selector = obop.where(where);
+    assert.notOk(selector instanceof Error, 'where() should not return an error: ' + selector);
     if (tester) {
       assert.equal(typeof selector, 'function', 'selector should be a function');
-      var actual = [].concat(sample1).filter(selector);
-      var expect = [].concat(sample1).filter(tester);
+      var actual = clone(sample).filter(selector);
+      var expect = clone(sample).filter(tester);
       assert.deepEqual(actual, expect);
     } else {
       assert.notOk(selector, 'selector should be empty');
@@ -24,53 +25,57 @@ function wheretest(where, tester, mess) {
   });
 }
 
+function clone(obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
+
 function tests(sample) {
   return function() {
 
-    wheretest({
+    wheretest(sample, {
       "name": "alpha"
     }, function(item) {
       return item.name == 'alpha';
     });
 
-    wheretest({
+    wheretest(sample, {
       "integral": 2345
     }, function(item) {
       return item.integral == 2345;
     });
 
-    wheretest({
+    wheretest(sample, {
       "integral": "3456"
     }, function(item) {
       return item.integral == "3456";
     });
-    wheretest({
+    wheretest(sample, {
       "numeric": 11.11
     }, function(item) {
       return item.numeric == 11.11;
     });
 
-    wheretest({
+    wheretest(sample, {
       "numeric": "33.33"
     }, function(item) {
       return item.numeric == "33.33";
     });
 
-    wheretest({
+    wheretest(sample, {
       "integral": 1234,
       "numeric": 11.11
     }, function(item) {
       return item.integral == 1234 && item.numeric == 11.11;
     });
 
-    wheretest({
+    wheretest(sample, {
       "integral": "5678",
       "numeric": "22.22"
     }, function(item) {
       return item.integral == "5678" && item.numeric == "22.22";
     });
 
-    wheretest({
+    wheretest(sample, {
       "name": "juliet",
       "integral": 1234,
       "numeric": 11.11
@@ -78,11 +83,11 @@ function tests(sample) {
       return item.name == "juliet" && item.integral == 1234 && item.numeric == 11.11;
     });
 
-    wheretest(null, null);
+    wheretest(sample, null, null);
 
-    wheretest({}, null);
+    wheretest(sample, {}, null);
 
-    wheretest(india, india, '[Function]');
+    wheretest(sample, india, india, '[Function]');
   };
 }
 
