@@ -2,37 +2,26 @@ var obop = require('../');
 var sample1 = require('./data/sample1.json');
 var sample2 = require('./data/sample2.json');
 var assert = require('chai').assert;
+var common = require('./common');
 
-describe('update-01', function() {
-  describe('sample1', tests(sample1));
-  describe('sample2', tests(sample2));
-});
-
-function updatetest(sample, update, tester, mess) {
-  mess = mess || JSON.stringify(update);
-  it(mess, function(done) {
-    var updater = obop.update(update);
-    assert.notOk(updater instanceof Error, 'update() should not return an error: ' + updater);
-    if (tester) {
-      assert.ok('function' == typeof updater, 'updater should be a function but ' + typeof updater);
-      var actual = clone(sample).filter(updater);
-      var expect = clone(sample).filter(tester);
-      assert.deepEqual(actual, expect);
-    } else {
-      assert.notOk(updater, 'updater should be empty but ' + updater);
-    }
-    done();
+module.exports = function(prefix, checker) {
+  prefix = prefix || '';
+  checker = checker || common.check_update;
+  describe(prefix + 'update-01', function() {
+    describe('sample1', tests(checker, sample1));
+    describe('sample2', tests(checker, sample2));
   });
+};
+
+var MPE = module.parent && module.parent.exports || {};
+if (!MPE.DONT_RUN_TESTS_ON_REQUIRE) {
+  module.exports();
 }
 
-function clone(obj) {
-  return JSON.parse(JSON.stringify(obj));
-}
-
-function tests(sample) {
+function tests(checker, sample) {
   return function() {
     // $set
-    updatetest(sample, {
+    checker(sample, {
       $set: {
         string: "STRING",
         integral: 9999
@@ -44,7 +33,7 @@ function tests(sample) {
     });
 
     // $unset
-    updatetest(sample, {
+    checker(sample, {
       $unset: {
         string: "",
         numeric: ""
@@ -56,7 +45,7 @@ function tests(sample) {
     });
 
     // $rename
-    updatetest(sample, {
+    checker(sample, {
       $rename: {
         numeric: "number",
         string: "text"
@@ -64,16 +53,20 @@ function tests(sample) {
     }, function(item) {
       var tmp;
       tmp = item.numeric;
-      delete item.numeric;
-      item.number = tmp;
+      if ('undefined' !== typeof tmp) {
+        delete item.numeric;
+        item.number = tmp;
+      }
       tmp = item.string;
-      delete item.string;
-      item.text = tmp;
+      if ('undefined' !== typeof tmp) {
+        delete item.string;
+        item.text = tmp;
+      }
       return item;
     });
 
     // $inc
-    updatetest(sample, {
+    checker(sample, {
       $inc: {
         integral: 1,
         numeric: -11.11
@@ -85,7 +78,7 @@ function tests(sample) {
     });
 
     // multiple-1
-    updatetest(sample, {
+    checker(sample, {
       $set: {
         string: "STRING"
       },
@@ -100,13 +93,15 @@ function tests(sample) {
       delete item.numeric;
       var tmp;
       tmp = item.integral;
-      delete item.integral;
-      item.number = tmp;
+      if ('undefined' !== typeof tmp) {
+        delete item.integral;
+        item.number = tmp;
+      }
       return item;
     });
 
     // multiple-2
-    updatetest(sample, {
+    checker(sample, {
       $unset: {
         string: ""
       },
@@ -120,20 +115,22 @@ function tests(sample) {
       delete item.string;
       var tmp;
       tmp = item.numeric;
-      delete item.numeric;
-      item.number = tmp;
+      if ('undefined' !== typeof tmp) {
+        delete item.numeric;
+        item.number = tmp;
+      }
       item.integral = (item.integral || 0) + 1;
       return item;
     });
 
     // null
-    updatetest(sample, null, null);
+    checker(sample, null, null);
 
     // empty object
-    updatetest(sample, {}, null);
+    checker(sample, {}, null);
 
     // function
-    updatetest(sample, through, through, '[Function]');
+    // checker(sample, through, through, '[Function]');
   };
 }
 

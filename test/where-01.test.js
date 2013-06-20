@@ -8,7 +8,7 @@ module.exports = function(prefix, checker) {
   prefix = prefix || '';
   checker = checker || common.check_where;
   describe(prefix + 'where-01', function() {
-    describe('sample1', tests(checker,sample1));
+    describe('sample1', tests(checker, sample1));
     describe('sample2', tests(checker, sample2));
   });
 };

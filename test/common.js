@@ -55,11 +55,11 @@ exports.check_view = function(sample, view, func, mess) {
 exports.obop_view = function(sample, view, func, next) {
   sample = common.clone(sample);
   var result = sample;
-  var projectoin = obop.view(view);
-  assert.notOk(projectoin instanceof Error, 'view() should not return an error: ' + projectoin);
-  if (projectoin) {
-    assert.equal(typeof projectoin, 'function', 'projectoin should be a function');
-    result = sample.map(projectoin);
+  var projection = obop.view(view);
+  assert.notOk(projection instanceof Error, 'view() should not return an error: ' + projection);
+  if (projection) {
+    assert.equal(typeof projection, 'function', 'projection should be a function');
+    result = sample.map(projection);
   }
   assert.ok(result instanceof Array, 'obop result should be an array');
   next(result);
@@ -121,6 +121,55 @@ exports.expect_order = function(sample, order, func, next) {
   }
   assert.ok(result instanceof Array, 'expecter result should be an array');
   next(result);
+};
+
+exports.check_update = function(sample, update, func, mess) {
+  mess = mess || JSON.stringify(update);
+  it(mess, function(done) {
+    common.obop_update(sample, update, func, function(actual) {
+      common.expect_update(sample, update, func, function(expect) {
+        actual = common.sort_fields(actual);
+        expect = common.sort_fields(expect);
+        assert.deepEqual(actual, expect);
+        done();
+      });
+    });
+  });
+};
+
+exports.obop_update = function(sample, update, func, next) {
+  sample = common.clone(sample);
+  var result = sample;
+  var updater = obop.update(update);
+  assert.notOk(updater instanceof Error, 'update() should not return an error: ' + updater);
+  if (updater) {
+    assert.equal(typeof updater, 'function', 'updater should be a function');
+    result = sample.map(updater);
+  }
+  assert.ok(result instanceof Array, 'obop result should be an array');
+  next(result);
+};
+
+exports.expect_update = function(sample, update, func, next) {
+  sample = common.clone(sample);
+  var result = sample;
+  if (func) {
+    assert.equal(typeof func, 'function', 'expecter should be a function');
+    result = sample.map(func);
+  }
+  assert.ok(result instanceof Array, 'expecter result should be an array');
+  next(result);
+};
+
+exports.sort_fields = function(result) {
+  result = result.map(function(item) {
+    var out = {};
+    Object.keys(item).sort().forEach(function(key) {
+      out[key] = item[key];
+    });
+    return out;
+  });
+  return result;
 };
 
 exports.clone = function(obj) {

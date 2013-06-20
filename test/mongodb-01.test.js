@@ -40,6 +40,7 @@ function main() {
   require('./where-03.test')('mongodb-01-', check_where);
   require('./view-01.test')('mongodb-01-', check_view);
   require('./order-01.test')('mongodb-01-', check_order);
+  require('./update-01.test')('mongodb-01-', check_update);
 }
 
 function check_where(sample, where, func, mess) {
@@ -127,6 +128,43 @@ function mongodb_order(sample, order, tester, next) {
       assert.equal(err, null);
       assert.ok(result instanceof Array, 'result should be an array');
       next(result);
+    });
+  });
+}
+
+function check_update(sample, update, func, mess) {
+  mess = mess || JSON.stringify(update);
+  it(mess, function(done) {
+    common.obop_update(sample, update, func, function(actual) {
+      mongodb_update(sample, update, func, function(expect) {
+        actual = common.sort_fields(actual);
+        expect = common.sort_fields(expect);
+        assert.deepEqual(actual, expect);
+        done();
+      });
+    });
+  });
+}
+
+function mongodb_update(sample, update, tester, next) {
+  update = update || {};
+  var opts = {
+    multi: 1
+  };
+  var view = {
+    _id: 0
+  };
+  var order = {
+    _id: 1
+  };
+  prepare(sample, function() {
+    collection.update({}, update, opts, function(err) {
+      collection.find({}, view).sort(order).toArray(function(err, result) {
+        // console.error(result);
+        assert.equal(err, null);
+        assert.ok(result instanceof Array, 'result should be an array');
+        next(result);
+      });
     });
   });
 }

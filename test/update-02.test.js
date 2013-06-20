@@ -1,53 +1,41 @@
 var obop = require('../');
 var sample1 = require('./data/sample1.json');
 var sample2 = require('./data/sample2.json');
-var assert = require('chai').assert;
+var common = require('./common');
 
-describe('update-02', function() {
-  describe('sample1', tests(sample1));
-  describe('sample2', tests(sample2));
-});
-
-function updatetest(sample, update, tester, mess) {
-  mess = mess || JSON.stringify(update);
-  it(mess, function(done) {
-    var updater = obop.update(update);
-    assert.notOk(updater instanceof Error, 'update() should not return an error: ' + updater);
-    if (tester) {
-      assert.ok('function' == typeof updater, 'updater should be a function but ' + typeof updater);
-      var actual = clone(sample).filter(updater);
-      var expect = clone(sample).filter(tester);
-      assert.deepEqual(actual, expect);
-    } else {
-      assert.notOk(updater, 'updater should be empty but ' + updater);
-    }
-    done();
+module.exports = function(prefix, checker) {
+  prefix = prefix || '';
+  checker = checker || common.check_update;
+  describe(prefix + 'update-02', function() {
+    describe('sample1', tests(checker, sample1));
+    describe('sample2', tests(checker, sample2));
   });
+};
+
+var MPE = module.parent && module.parent.exports || {};
+if (!MPE.DONT_RUN_TESTS_ON_REQUIRE) {
+  module.exports();
 }
 
-function clone(obj) {
-  return JSON.parse(JSON.stringify(obj));
-}
-
-function tests(sample) {
+function tests(checker, sample) {
   return function() {
 
     // $push
-    updatetest(sample, {
+    checker(sample, {
       $push: {
         arr: 9999
       }
     }, pusher(9999));
 
     // $pull
-    updatetest(sample, {
+    checker(sample, {
       $pull: {
         arr: 222
       }
     }, puller(222));
 
     // $pull
-    updatetest(sample, {
+    checker(sample, {
       $pull: {
         arr: "bar"
       }
@@ -56,7 +44,7 @@ function tests(sample) {
     // multiple
     var m1push = pusher("foobar");
     var m1pull = puller(333);
-    updatetest(sample, {
+    checker(sample, {
       $push: {
         arr: "foobar"
       },
@@ -70,7 +58,7 @@ function tests(sample) {
     // multiple
     var m2push = pusher(9999);
     var m2pull = puller("baz");
-    updatetest(sample, {
+    checker(sample, {
       $pull: {
         arr: "baz"
       },
