@@ -3,38 +3,27 @@ var sample1 = require('./data/sample1.json');
 var sample2 = require('./data/sample2.json');
 var sample3 = require('./data/sample3.json');
 var assert = require('chai').assert;
+var common = require('./common');
 
-describe('where-03', function() {
-  describe('sample1', tests1(sample1));
-  describe('sample2', tests2(sample2));
-  describe('sample3', tests3(sample3));
-});
-
-function wheretest(sample, where, tester, mess) {
-  mess = mess || JSON.stringify(where);
-  it(mess, function(done) {
-    var selector = obop.where(where);
-    assert.notOk(selector instanceof Error, 'where() should not return an error: ' + selector);
-    if (tester) {
-      assert.equal(typeof selector, 'function', 'selector should be a function');
-      var actual = clone(sample).filter(selector);
-      var expect = clone(sample).filter(tester);
-      assert.deepEqual(actual, expect);
-    } else {
-      assert.notOk(selector, 'selector should be empty');
-    }
-    done();
+module.exports = function(prefix, checker) {
+  prefix = prefix || '';
+  checker = checker || common.check_where;
+  describe(prefix + 'where-03', function() {
+    describe('sample1', tests1(checker, sample1));
+    describe('sample2', tests2(checker, sample2));
+    describe('sample3', tests3(checker, sample3));
   });
+};
+
+var MPE = module.parent && module.parent.exports || {};
+if (!MPE.DONT_RUN_TESTS_ON_REQUIRE) {
+  module.exports();
 }
 
-function clone(obj) {
-  return JSON.parse(JSON.stringify(obj));
-}
-
-function tests1(sample) {
+function tests1(checker, sample) {
   return function() {
 
-    wheretest(sample, {
+    checker(sample, {
       "integral": {
         $gt: 2000
       }
@@ -42,7 +31,7 @@ function tests1(sample) {
       return item.integral > 2000;
     });
 
-    wheretest(sample, {
+    checker(sample, {
       "integral": {
         $gte: 4567
       }
@@ -50,7 +39,7 @@ function tests1(sample) {
       return item.integral >= 4567;
     });
 
-    wheretest(sample, {
+    checker(sample, {
       "numeric": {
         $lt: 30
       }
@@ -58,7 +47,7 @@ function tests1(sample) {
       return item.numeric < 30;
     });
 
-    wheretest(sample, {
+    checker(sample, {
       "numeric": {
         $lte: 22.22
       }
@@ -66,7 +55,7 @@ function tests1(sample) {
       return item.numeric <= 22.22;
     });
 
-    wheretest(sample, {
+    checker(sample, {
       "name": {
         $ne: "juliet"
       }
@@ -74,7 +63,7 @@ function tests1(sample) {
       return item.name != "juliet";
     });
 
-    wheretest(sample, {
+    checker(sample, {
       "integral": {
         $in: [2345, 4567]
       }
@@ -82,7 +71,7 @@ function tests1(sample) {
       return item.integral == 2345 || item.integral == 4567;
     });
 
-    wheretest(sample, {
+    checker(sample, {
       "integral": {
         $nin: [1234, 5678]
       }
@@ -90,7 +79,7 @@ function tests1(sample) {
       return item.integral != 1234 && item.integral != 5678;
     });
 
-    wheretest(sample, {
+    checker(sample, {
       $or: [{
           integral: {
             $lt: 2000
@@ -105,7 +94,7 @@ function tests1(sample) {
       return item.integral < 2000 || item.numeric > 30;
     });
 
-    wheretest(sample, {
+    checker(sample, {
       $and: [{
           integral: {
             $gt: 2000
@@ -120,7 +109,7 @@ function tests1(sample) {
       return item.integral > 2000 && item.numeric < 30;
     });
 
-    wheretest(sample, {
+    checker(sample, {
       "integral": {
         $not: {
           $lt: 4000
@@ -134,32 +123,32 @@ function tests1(sample) {
   };
 }
 
-function tests2(sample) {
+function tests2(checker, sample) {
   return function() {
 
-    wheretest(sample, {
+    checker(sample, {
       "arr": {
         $size: 0
       }
     }, function(item) {
-      if (!item) return true;
-      if ('undefined' == typeof item.arr) return true;
+      if (!item) return false;
+      if ('undefined' == typeof item.arr) return false;
       if (!(item.arr instanceof Array)) return false;
       return !item.arr.length;
     });
 
-    wheretest(sample, {
+    checker(sample, {
       "arr": {
         $size: 1
       }
     }, function(item) {
       if (!item) return false;
       if ('undefined' == typeof item.arr) return false;
-      if (!(item.arr instanceof Array)) return true;
+      if (!(item.arr instanceof Array)) return false;
       return item.arr.length == 1;
     });
 
-    wheretest(sample, {
+    checker(sample, {
       "arr": {
         $size: 6
       }
@@ -171,10 +160,10 @@ function tests2(sample) {
   };
 }
 
-function tests3(sample) {
+function tests3(checker, sample) {
   return function() {
 
-    wheretest(sample, {
+    checker(sample, {
       "a.b": {
         $not: {
           $gte: 2
@@ -186,18 +175,18 @@ function tests3(sample) {
       return !b;
     });
 
-    wheretest(sample, {
+    checker(sample, {
       "a.b": {
-        $exist: true
+        $exists: true
       }
     }, function(item) {
       var a = item.a || {};
       return 'undefined' !== typeof a.b;
     });
 
-    wheretest(sample, {
+    checker(sample, {
       "a.b": {
-        $exist: false
+        $exists: false
       }
     }, function(item) {
       var a = item.a || {};
