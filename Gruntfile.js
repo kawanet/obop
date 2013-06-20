@@ -23,6 +23,11 @@ module.exports = function(grunt) {
       'test/**/*.json'
   ];
 
+  var jsdoc_src = [
+      './index.js',
+      'lib/**/*.js'
+  ];
+
   grunt.initConfig({
 
     // https://github.com/gruntjs/grunt-contrib-jshint
@@ -58,7 +63,7 @@ module.exports = function(grunt) {
     // https://github.com/krampstudio/grunt-jsdoc-plugin
     jsdoc: {
       all: {
-        src: ['./index.js', 'lib/**/*.js']
+        src: jsdoc_src
       },
       options: {
         destination: 'gh-pages/docs'
@@ -91,9 +96,16 @@ module.exports = function(grunt) {
 
     // https://github.com/gruntjs/grunt-contrib-watch
     watch: {
-      all: {
+      scripts: {
         files: jshint_src,
         tasks: ['default'],
+        options: {
+          interrupt: true,
+        }
+      },
+      docs: {
+        files: jsdoc_src,
+        tasks: ['jsdoc'],
         options: {
           interrupt: true,
         }
