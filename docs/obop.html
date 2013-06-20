@@ -47,7 +47,15 @@
     
     
     <div class="description">
-        This class provides translation methods for MongoDB-like operator objects.
+        This class provides a set of array manipulation methods:
+<a href="obop.html#where"><code>where()</code></a>
+/
+<a href="obop.html#order"><code>order()</code></a>
+/
+<a href="obop.html#update"><code>update()</code></a>
+/
+<a href="obop.html#view"><code>view()</code></a>
+powered with MongoDB-style object operators.
     </div>
     
 
@@ -130,52 +138,6 @@
         </tr>
 	
 	
-	
-        <tr>
-            
-                <td class="name"><code>settings.nop</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Bool</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">Set this true if you prefer a through function returned, instead of null value returned per default, in a case of no operations applied.</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>settings.throwError</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Bool</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">Set this true if you prefer throwing an exception, instead of an Error instance returned per default, in a case of something wrong found.</td>
-        </tr>
-	
-	
 	</tbody>
 </table></dl>
         
@@ -207,6 +169,17 @@
     
     
     
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://github.com/kawanet/obop">https://github.com/kawanet/obop</a></li>
+        
+            <li><a href="http://kawanet.github.io/obop/docs/obop.html">http://kawanet.github.io/obop/docs/obop.html</a></li>
+        
+            <li><a href="https://raw.github.com/kawanet/obop/master/build/obop.min.js">https://raw.github.com/kawanet/obop/master/build/obop.min.js</a></li>
+        </ul>
+    </dd>
+    
     
     
 </dl>
@@ -224,14 +197,12 @@
     <pre class="prettyprint"><code>// node.js
 var obop = require('obop')();
 var src = [ { a: 1 }, { a: 2 }, { a: 3 } ];
-var func = obop.where( { a: 2 } );
-var out = src.filter(func); // ==> [ { a: 2 } ]</code></pre>
+var out = obop.where( src, { a: 2 } ); // => [ { a: 2 } ]</code></pre>
 
-    <pre class="prettyprint"><code>&lt;script src="obop.js"&gt;&lt;/script&gt;
+    <pre class="prettyprint"><code>&lt;script src="obop.min.js"&gt;&lt;/script&gt;
 &lt;script&gt;
   var src = [ { a: 1 }, { a: 2 }, { a: 3 } ];
-  var func = obop.where( { a: 2 } );
-  var out = src.filter(func); // ==> [ { a: 2 } ]
+  var out = obop.where( src, { a: 2 } ); // => [ { a: 2 } ]
 &lt;/script&gt;</code></pre>
 
     
@@ -258,7 +229,7 @@ var out = src.filter(func); // ==> [ { a: 2 } ]</code></pre>
         <dl>
             
 <dt>
-    <h4 class="name" id="order"><span class="type-signature"></span>order<span class="signature">(sort, settings)</span><span class="type-signature"> &rarr; {Function}</span></h4>
+    <h4 class="name" id="order"><span class="type-signature"></span>order<span class="signature">(<span class="optional">array</span>, sort)</span><span class="type-signature"> &rarr; {Array}</span></h4>
     
     
 </dt>
@@ -266,7 +237,7 @@ var out = src.filter(func); // ==> [ { a: 2 } ]</code></pre>
     
     
     <div class="description">
-        This generates an order function compiled from order-by-clause operator object.
+        This sorts an array of items, or generates a sort function compiled from order-by-clause sort parameters object.
     </div>
     
 
@@ -288,6 +259,8 @@ var out = src.filter(func); // ==> [ { a: 2 } ]</code></pre>
 		<th>Type</th>
 		
 		
+		<th>Argument</th>
+		
 		
 		
 		
@@ -296,6 +269,39 @@ var out = src.filter(func); // ==> [ { a: 2 } ]</code></pre>
 	</thead>
 	
 	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>array</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">source array to sort</td>
+        </tr>
+	
 	
 	
         <tr>
@@ -309,6 +315,9 @@ var out = src.filter(func); // ==> [ { a: 2 } ]</code></pre>
 <span class="param-type">Object</span>
 |
 
+<span class="param-type">Array</span>
+|
+
 <span class="param-type">Function</span>
 
 
@@ -316,33 +325,18 @@ var out = src.filter(func); // ==> [ { a: 2 } ]</code></pre>
             </td>
             
             
+                <td class="attributes">
+                
+                    
+                
+                    
+                
+                </td>
+            
             
             
             
             <td class="description last">sort parameters or function</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>settings</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">settings: nop</td>
         </tr>
 	
 	
@@ -352,57 +346,6 @@ var out = src.filter(func); // ==> [ { a: 2 } ]</code></pre>
     
     
 <dl class="details">
-    
-        
-        <h5 class="subsection-title">Properties:</h5>
-        
-        <dl>
-
-<table class="props">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>nop</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Function</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">obop.order().nop - through function</td>
-        </tr>
-	
-	
-	</tbody>
-</table></dl>
-        
     
         
     
@@ -442,10 +385,30 @@ var out = src.filter(func); // ==> [ { a: 2 } ]</code></pre>
     
     
     <h5>Returns:</h5>
-    
-            
+    <ul>
+            <li>
 <div class="param-desc">
-    function for Array.prototype.sort() etc.
+    Sorted array of items (if source array given)
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">Array</span>
+
+
+	</dd>
+</dl>
+</li>
+        
+            <li>
+<div class="param-desc">
+    Sort function compiled for Array.prototype.sort() method (if source array not given)
 </div>
 
 
@@ -461,8 +424,28 @@ var out = src.filter(func); // ==> [ { a: 2 } ]</code></pre>
 
 	</dd>
 </dl>
-
+</li>
         
+            <li>
+<div class="param-desc">
+    Error instance (if source array not given but invalid sort parameters given)
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">Error</span>
+
+
+	</dd>
+</dl>
+</li>
+        </ul>
     
     
         <h5>Example</h5>
@@ -482,8 +465,15 @@ console.log(out1);
 
 // with obop
 var order = { price: 1 };
-var out2 = list.sort(obop.order(order));
-console.log(out2);</code></pre>
+var out2 = obop.order(list, order);
+console.log(out2);
+
+// compile a sort function
+var order = { price: 1 };
+var sorter = obop.order(order);
+if (sorter instanceof Error) throw sorter;
+var out3 = list.sort(sorter);
+console.log(out3);</code></pre>
 
     
 </dd>
@@ -491,7 +481,7 @@ console.log(out2);</code></pre>
         
             
 <dt>
-    <h4 class="name" id="update"><span class="type-signature"></span>update<span class="signature">(update, options)</span><span class="type-signature"> &rarr; {Function}</span></h4>
+    <h4 class="name" id="update"><span class="type-signature"></span>update<span class="signature">(<span class="optional">array</span>, update)</span><span class="type-signature"> &rarr; {Array}</span></h4>
     
     
 </dt>
@@ -499,7 +489,7 @@ console.log(out2);</code></pre>
     
     
     <div class="description">
-        This generates an update compiled function from update-clause operator object.
+        This updates an array of items, or generates an update compiled function from update-clause operators object.
     </div>
     
 
@@ -521,6 +511,8 @@ console.log(out2);</code></pre>
 		<th>Type</th>
 		
 		
+		<th>Argument</th>
+		
 		
 		
 		
@@ -529,6 +521,39 @@ console.log(out2);</code></pre>
 	</thead>
 	
 	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>array</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">source array to update</td>
+        </tr>
+	
 	
 	
         <tr>
@@ -549,33 +574,18 @@ console.log(out2);</code></pre>
             </td>
             
             
+                <td class="attributes">
+                
+                    
+                
+                    
+                
+                </td>
+            
             
             
             
             <td class="description last">update operators or function</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>options</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">options: nop</td>
         </tr>
 	
 	
@@ -631,10 +641,30 @@ console.log(out2);</code></pre>
     
     
     <h5>Returns:</h5>
-    
-            
+    <ul>
+            <li>
 <div class="param-desc">
-    function for Array.prototype.map() etc.
+    Array of updated items (if source array given)
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">Array</span>
+
+
+	</dd>
+</dl>
+</li>
+        
+            <li>
+<div class="param-desc">
+    Update function compiled for Array.prototype.map() method (if source array not given)
 </div>
 
 
@@ -650,8 +680,28 @@ console.log(out2);</code></pre>
 
 	</dd>
 </dl>
-
+</li>
         
+            <li>
+<div class="param-desc">
+    Error instance (if source array not given but invalid update operaters given)
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">Error</span>
+
+
+	</dd>
+</dl>
+</li>
+        </ul>
     
     
         <h5>Example</h5>
@@ -663,7 +713,7 @@ console.log(out2);</code></pre>
    { name: "grape", price: 30 }
 ];
 
-// without obop
+// update without obop
 var out1 = list.filter(function(item) {
     item.sale = true;
     item.price -= 5;
@@ -671,10 +721,17 @@ var out1 = list.filter(function(item) {
 });
 console.log(out1);
 
-// with obop
+// update with obop
 var update = { $set: { sale: true }, $inc: { price: -5 } };
-var out2 = list.filter(obop.update(update));
-console.log(out2);</code></pre>
+var out2 = obop.update(list, update);
+console.log(out2);
+
+// compile a update function
+var update = { $set: { sale: true }, $inc: { price: -5 } };
+var updater = obop.update(update);
+if (updater instanceof Error) throw updater;
+var out3 = list.map(updater);
+console.log(out3);</code></pre>
 
     
 </dd>
@@ -682,7 +739,7 @@ console.log(out2);</code></pre>
         
             
 <dt>
-    <h4 class="name" id="view"><span class="type-signature"></span>view<span class="signature">(projection, options)</span><span class="type-signature"> &rarr; {Function}</span></h4>
+    <h4 class="name" id="view"><span class="type-signature"></span>view<span class="signature">(<span class="optional">array</span>, param)</span><span class="type-signature"> &rarr; {Array}</span></h4>
     
     
 </dt>
@@ -690,7 +747,7 @@ console.log(out2);</code></pre>
     
     
     <div class="description">
-        This generates a projection function compiled from view mapping parameters object.
+        This filters fields of items, or generates a projection function compiled from view mapping parameters object.
     </div>
     
 
@@ -712,6 +769,8 @@ console.log(out2);</code></pre>
 		<th>Type</th>
 		
 		
+		<th>Argument</th>
+		
 		
 		
 		
@@ -724,7 +783,40 @@ console.log(out2);</code></pre>
 	
         <tr>
             
-                <td class="name"><code>projection</code></td>
+                <td class="name"><code>array</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">source array to map</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>param</code></td>
             
             
             <td class="type">
@@ -740,33 +832,18 @@ console.log(out2);</code></pre>
             </td>
             
             
-            
-            
-            
-            <td class="description last">mapping parameters or function</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>options</code></td>
-            
-            
-            <td class="type">
-            
+                <td class="attributes">
                 
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-            
-            
+                    
+                
+                    
+                
+                </td>
             
             
             
-            <td class="description last">options: nop</td>
+            
+            <td class="description last">output fields or function</td>
         </tr>
 	
 	
@@ -815,10 +892,30 @@ console.log(out2);</code></pre>
     
     
     <h5>Returns:</h5>
-    
-            
+    <ul>
+            <li>
 <div class="param-desc">
-    function for Array.prototype.map() etc.
+    Array of filtered items (if source array given)
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">Array</span>
+
+
+	</dd>
+</dl>
+</li>
+        
+            <li>
+<div class="param-desc">
+    Projection function compiled for Array.prototype.map() method (if source array not given)
 </div>
 
 
@@ -834,8 +931,28 @@ console.log(out2);</code></pre>
 
 	</dd>
 </dl>
-
+</li>
         
+            <li>
+<div class="param-desc">
+    Error instance (if source array not given but invalid output fields specified)
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">Error</span>
+
+
+	</dd>
+</dl>
+</li>
+        </ul>
     
     
         <h5>Example</h5>
@@ -847,16 +964,23 @@ console.log(out2);</code></pre>
    { name: "grape", price: 30 }
 ];
 
-// without obop
+// map without obop
 var out1 = list.map(function(item) {
     return { name: item.name };
 });
 console.log(out1);
 
-// with obop
+// map with obop
 var view = { name: 1 };
-var out2 = list.map(obop.view(view));
-console.log(out2);</code></pre>
+var out2 = obop.view(list, view);
+console.log(out2);
+
+// compile a map function
+var view = { name: 1 };
+var filter = obop.view(view);
+if (filter instanceof Error) throw filter;
+var out3 = list.map(filter);
+console.log(out3);</code></pre>
 
     
 </dd>
@@ -864,7 +988,7 @@ console.log(out2);</code></pre>
         
             
 <dt>
-    <h4 class="name" id="where"><span class="type-signature"></span>where<span class="signature">(selector, options)</span><span class="type-signature"> &rarr; {Function}</span></h4>
+    <h4 class="name" id="where"><span class="type-signature"></span>where<span class="signature">(<span class="optional">array</span>, param)</span><span class="type-signature"> &rarr; {Array}</span></h4>
     
     
 </dt>
@@ -872,7 +996,7 @@ console.log(out2);</code></pre>
     
     
     <div class="description">
-        This generates a conditional function compiled from where-clause operator object a.k.a query selector.
+        This search items from an array, or generates a conditional function compiled from where-clause operators object.
     </div>
     
 
@@ -894,6 +1018,8 @@ console.log(out2);</code></pre>
 		<th>Type</th>
 		
 		
+		<th>Argument</th>
+		
 		
 		
 		
@@ -906,7 +1032,40 @@ console.log(out2);</code></pre>
 	
         <tr>
             
-                <td class="name"><code>selector</code></td>
+                <td class="name"><code>array</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">source array to search</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>param</code></td>
             
             
             <td class="type">
@@ -922,33 +1081,18 @@ console.log(out2);</code></pre>
             </td>
             
             
-            
-            
-            
-            <td class="description last">query parameters or function</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>options</code></td>
-            
-            
-            <td class="type">
-            
+                <td class="attributes">
                 
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-            
-            
+                    
+                
+                    
+                
+                </td>
             
             
             
-            <td class="description last">options: nop</td>
+            
+            <td class="description last">query selector or function</td>
         </tr>
 	
 	
@@ -989,7 +1133,7 @@ console.log(out2);</code></pre>
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="http://docs.mongodb.org/manual/reference/operator/#query-selectors">http://docs.mongodb.org/manual/reference/operator/#query-selectors</a></li>
+            <li><a href="http://docs.mongodb.org/manual/reference/operator/#query-params">http://docs.mongodb.org/manual/reference/operator/#query-params</a></li>
         </ul>
     </dd>
     
@@ -1004,10 +1148,30 @@ console.log(out2);</code></pre>
     
     
     <h5>Returns:</h5>
-    
-            
+    <ul>
+            <li>
 <div class="param-desc">
-    function for Array.prototype.filter() etc.
+    Array of matched items (if source array given)
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">Array</span>
+
+
+	</dd>
+</dl>
+</li>
+        
+            <li>
+<div class="param-desc">
+    Conditional function compiled for Array.prototype.filter() method (if source array not given)
 </div>
 
 
@@ -1023,8 +1187,28 @@ console.log(out2);</code></pre>
 
 	</dd>
 </dl>
-
+</li>
         
+            <li>
+<div class="param-desc">
+    Error instance (if source array not given but invalid query selector given)
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">Error</span>
+
+
+	</dd>
+</dl>
+</li>
+        </ul>
     
     
         <h5>Example</h5>
@@ -1036,16 +1220,23 @@ console.log(out2);</code></pre>
    { name: "grape", price: 30 }
 ];
 
-// without obop
+// search without obop
 var out1 = list.filter(function(item) {
     return item.name == "orange";
 });
 console.log(out1);
 
-// with obop
+// search with obop
 var where = { name: "orange" };
-var out2 = list.filter(obop.where(where));
-console.log(out2);</code></pre>
+var out2 = obop.where(list, where);
+console.log(out2);
+
+// compile a search function
+var where = { name: "orange" };
+var filter = obop.where(where);
+if (filter instanceof Error) throw filter;
+var out3 = list.filter(filter);
+console.log(out3);</code></pre>
 
     
 </dd>
@@ -1072,7 +1263,7 @@ console.log(out2);</code></pre>
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.0-dev</a> on Wed Jun 19 2013 15:28:14 GMT+0900 (JST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.0-dev</a> on Fri Jun 21 2013 00:33:17 GMT+0900 (JST)
 </footer>
 
 <script> prettyPrint(); </script>

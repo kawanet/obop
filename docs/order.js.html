@@ -28,13 +28,14 @@
             <pre class="prettyprint source"><code>/*! order.js */
 
 /**
- * This generates an order function compiled from order-by-clause operator object.
+ * This sorts an array of items, or generates a sort function compiled from order-by-clause sort parameters object.
  *
  * @method obop.prototype.order
- * @param {Object|Function} sort - sort parameters or function
- * @param {Object} settings - settings: nop
- * @property {Function} nop - obop.order().nop - through function
- * @returns {Function} function for Array.prototype.sort() etc.
+ * @param {Array} [array] - source array to sort
+ * @param {Object|Array|Function} sort - sort parameters or function
+ * @returns {Array} Sorted array of items (if source array given)
+ * @returns {Function} Sort function compiled for Array.prototype.sort() method (if source array not given)
+ * @returns {Error} Error instance (if source array not given but invalid sort parameters given)
  *
  * @example
  * var list = [
@@ -52,69 +53,133 @@
  *
  * // with obop
  * var order = { price: 1 };
- * var out2 = list.sort(obop.order(order));
+ * var out2 = obop.order(list, order);
  * console.log(out2);
+ *
+ * // compile a sort function
+ * var order = { price: 1 };
+ * var sorter = obop.order(order);
+ * if (sorter instanceof Error) throw sorter;
+ * var out3 = list.sort(sorter);
+ * console.log(out3);
  */
 
-exports.order = function(sort) {
+exports.order = function(array, param) {
+  var func;
+  var len = arguments.length;
+  if (len == 1) {
+    func = order.call(this, array);
+    if (func instanceof Error) throw func;
+    return func;
+  } else if (len == 2) {
+    if (array instanceof Array) {
+      func = order.call(this, param);
+      if (func instanceof Error) throw func;
+      return array.sort(func);
+    } else {
+      throw new Error('Invalid argument type: ' + array);
+    }
+  } else {
+    throw new Error('Invalid arguments length: ' + len);
+  }
+};
+
+function order(param) {
+  var obop = this;
+  var _nop = null; // no operation
+  var key, ret;
 
   // function type
-  if ('function' == typeof sort) {
-    return sort;
+  if ('function' == typeof param) {
+    return param;
   }
 
   // default parameters
-  sort = sort || {};
-
-  // settings
-  var obop = this || require('../index');
-  var settings = obop.settings || {};
-
-  // no operation
-  var _nop = settings.nop ? nop : null;
+  param = param || {};
 
   // other types than object
-  if ('object' != typeof sort) {
-    var err = new Error('Invalid order operator type: ' + sort);
-    if (settings.throwError) {
-      throw err;
-    } else {
-      return err;
-    }
+  if ('object' != typeof param) {
+    return new Error('Invalid order operator type: ' + param);
   }
 
-  var fields = Object.keys(sort);
+  // Array format: [ ["foo", 1], ["bar", -1] ]
+  if (param instanceof Array) {
+    // each pair must have a couple of elements
+    var err;
+    param.forEach(function(pair) {
+      if (err) return;
+      if ((pair instanceof Array) &&
+        (pair.length === 2) &&
+        ('undefined' !== typeof pair[0]) &&
+        (pair[1] - pair[1] === 0)) {
+        // ok
+      } else {
+        err = new Error('Invalid order pair: ' + pair);
+      }
+    });
+    if (err) return err;
 
-  // no sort operator
-  if (!fields.length) {
+    if (param.length === 0) {
+
+      // no parameters
+      return _nop;
+
+    } else if (param.length === 1) {
+
+      // one field: faster shortcut
+      key = param[0][0];
+      ret = param[0][1];
+      return single;
+    }
+
+    // more fields
+    var len = param.length;
+    return function(a, b) {
+      for (var i = 0; i &lt; len; i++) {
+        var key = param[i][0];
+        var ret = param[i][1];
+        if (a[key] &lt; b[key]) {
+          return -ret;
+        } else if (a[key] > b[key]) {
+          return ret;
+        }
+      }
+    };
+  }
+
+  // Object format: { "foo": 1, "bar": -1 }
+  var fields = Object.keys(param);
+
+  if (fields.length === 0) {
+
+    // no parameters
     return _nop;
-  }
 
-  // one field: faster
-  if (fields.length == 1) {
-    var key = fields[0];
-    if (fields[key]) {
-      var ret = sort[key];
-      return function(a, b) {
-        return (a[key] &lt; b[key]) ? -ret : (a[key] > b[key]) ? ret : 0;
-      };
-    }
+  } else if (fields.length === 1) {
+
+    // one field: faster shortcut
+    key = fields[0];
+    ret = param[key];
+    if (fields[key]) return single;
   }
 
   // more fields
   return function(a, b) {
-    for (var key in sort) {
+    for (var key in param) {
+      var ret = param[key];
       if (a[key] &lt; b[key]) {
-        return -sort[key];
+        return -ret;
       } else if (a[key] > b[key]) {
-        return sort[key];
+        return ret;
       }
     }
   };
-};
 
-function nop(a, b) {
-  return 0;
+  // single field
+
+  function single(a, b) {
+    return (a[key] &lt; b[key]) ? -ret : (a[key] > b[key]) ? ret : 0;
+  }
 }
 </code></pre>
         </article>
@@ -132,7 +197,7 @@ function nop(a, b) {
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.0-dev</a> on Wed Jun 19 2013 15:28:13 GMT+0900 (JST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.0-dev</a> on Fri Jun 21 2013 00:33:17 GMT+0900 (JST)
 </footer>
 
 <script> prettyPrint(); </script>
