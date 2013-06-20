@@ -18,10 +18,6 @@ if (!MPE.DONT_RUN_TESTS_ON_REQUIRE) {
   module.exports();
 }
 
-function clone(obj) {
-  return JSON.parse(JSON.stringify(obj));
-}
-
 function tests(checker, sample) {
   return function() {
 

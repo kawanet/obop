@@ -35,12 +35,13 @@ describe('mongodb-01', function() {
 });
 
 function main() {
-  require('./where-01.test')('mongodb-01-', checker);
-  require('./where-02.test')('mongodb-01-', checker);
-  require('./where-03.test')('mongodb-01-', checker);
+  require('./where-01.test')('mongodb-01-', check_where);
+  require('./where-02.test')('mongodb-01-', check_where);
+  require('./where-03.test')('mongodb-01-', check_where);
+  require('./view-01.test')('mongodb-01-', check_view);
 }
 
-function checker(sample, where, func, mess) {
+function check_where(sample, where, func, mess) {
   mess = mess || JSON.stringify(where);
   it(mess, function(done) {
     common.obop_where(sample, where, func, function(actual) {
@@ -65,6 +66,43 @@ function mongodb_where(sample, where, tester, next) {
       }).toArray(function(err, result) {
         assert.equal(err, null);
         assert.ok(result instanceof Array, 'result should be an array');
+        next(result);
+      });
+    });
+  });
+}
+
+function check_view(sample, view, func, mess) {
+  mess = mess || JSON.stringify(view);
+  it(mess, function(done) {
+    common.obop_view(sample, view, func, function(actual) {
+      mongodb_view(sample, view, func, function(expect) {
+        assert.deepEqual(actual, expect);
+        done();
+      });
+    });
+  });
+}
+
+function mongodb_view(sample, view, tester, next) {
+  // Uncaught TypeError: Object.getOwnPropertyNames called on non-object
+  // at Collection.find (node_modules/mongodb/lib/mongodb/collection.js:814:28)
+  view = view || {};
+
+  sample = common.clone(sample);
+  collection.remove(function(err) {
+    assert.equal(err, null);
+    collection.insert(sample, function(err) {
+      assert.equal(err, null);
+      collection.find({}, view || {}).sort({
+        _id: 1
+      }).toArray(function(err, result) {
+        // console.error(result);
+        assert.equal(err, null);
+        assert.ok(result instanceof Array, 'result should be an array');
+        result.forEach(function(item) {
+          delete item._id;
+        });
         next(result);
       });
     });

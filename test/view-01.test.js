@@ -1,98 +1,88 @@
 var obop = require('../');
 var sample1 = require('./data/sample1.json');
 var sample2 = require('./data/sample2.json');
-var assert = require('chai').assert;
+var common = require('./common');
 
-describe('view-01', function() {
-  describe('sample1', tests(sample1));
-  describe('sample2', tests(sample2));
-});
-
-function viewtest(sample, view, tester, mess) {
-  mess = mess || JSON.stringify(view);
-  it(mess, function(done) {
-    var projection = obop.view(view);
-    assert.notOk(projection instanceof Error, 'view() should not return an error: ' + projection);
-    if (tester) {
-      assert.equal(typeof projection, 'function', 'projection should be a function');
-      var actual = clone(sample).filter(projection);
-      var expect = clone(sample).filter(tester);
-      assert.deepEqual(actual, expect, mess);
-    } else {
-      assert.notOk(projection, 'projection should be empty');
-    }
-    done();
+module.exports = function(prefix, checker) {
+  prefix = prefix || '';
+  checker = checker || common.check_view;
+  describe(prefix + 'view-01', function() {
+    describe('sample1', tests(checker, sample1));
+    describe('sample2', tests(checker, sample2));
   });
+};
+
+var MPE = module.parent && module.parent.exports || {};
+if (!MPE.DONT_RUN_TESTS_ON_REQUIRE) {
+  module.exports();
 }
 
-function clone(obj) {
-  return JSON.parse(JSON.stringify(obj));
-}
-
-function tests(sample) {
+function tests(checker, sample) {
   return function() {
 
-    viewtest(sample, {
+    checker(sample, {
       name: 1
     }, function(item) {
-      return {
-        name: item.name
-      };
+      var out = {};
+      if ('undefined' !== typeof item.name) out.name = item.name;
+      return out;
     });
 
-    viewtest(sample, {
+    checker(sample, {
       integral: 1,
       numeric: 1
     }, function(item) {
-      return {
-        integral: item.integral,
-        numeric: item.numeric
-      };
+      var out = {};
+      if ('undefined' !== typeof item.integral) out.integral = item.integral;
+      if ('undefined' !== typeof item.numeric) out.numeric = item.numeric;
+      return out;
     });
 
-    viewtest(sample, {
+    checker(sample, {
       name: 1,
       integral: 1,
       numeric: 1
     }, function(item) {
-      return {
-        name: item.name,
-        integral: item.integral,
-        numeric: item.numeric,
-      };
+      var out = {};
+      if ('undefined' !== typeof item.name) out.name = item.name;
+      if ('undefined' !== typeof item.integral) out.integral = item.integral;
+      if ('undefined' !== typeof item.numeric) out.numeric = item.numeric;
+      return out;
     });
 
-    viewtest(sample, {
+    checker(sample, {
       name: 0
     }, function(item) {
-      return {
-        integral: item.integral,
-        numeric: item.numeric
-      };
+      delete item.name;
+      return item;
     });
 
-    viewtest(sample, {
+    checker(sample, {
       integral: 0,
       numeric: 0
     }, function(item) {
-      return {
-        name: item.name
-      };
+      delete item.integral;
+      delete item.numeric;
+      return item;
     });
 
-    viewtest(sample, {
+    checker(sample, {
       name: 0,
       integral: 0,
       numeric: 0
     }, function(item) {
-      return {};
+      delete item.name;
+      delete item.integral;
+      delete item.numeric;
+      return item;
     });
 
-    viewtest(sample, null, null);
+    checker(sample, null, null);
 
-    viewtest(sample, {}, null);
+    checker(sample, {}, null);
 
-    viewtest(sample, _name, _name, '[Function]');
+    // function type is not allowed at MongoDB
+    // checker(sample, _name, _name, '[Function]');
   };
 }
 

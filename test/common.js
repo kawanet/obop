@@ -40,6 +40,42 @@ exports.expect_where = function(sample, where, func, next) {
   next(result);
 };
 
+exports.check_view = function(sample, view, func, mess) {
+  mess = mess || JSON.stringify(view);
+  it(mess, function(done) {
+    common.obop_view(sample, view, func, function(actual) {
+      common.expect_view(sample, view, func, function(expect) {
+        assert.deepEqual(actual, expect);
+        done();
+      });
+    });
+  });
+};
+
+exports.obop_view = function(sample, view, func, next) {
+  sample = common.clone(sample);
+  var result = sample;
+  var projectoin = obop.view(view);
+  assert.notOk(projectoin instanceof Error, 'view() should not return an error: ' + projectoin);
+  if (projectoin) {
+    assert.equal(typeof projectoin, 'function', 'projectoin should be a function');
+    result = sample.map(projectoin);
+  }
+  assert.ok(result instanceof Array, 'obop result should be an array');
+  next(result);
+};
+
+exports.expect_view = function(sample, view, func, next) {
+  sample = common.clone(sample);
+  var result = sample;
+  if (func) {
+    assert.equal(typeof func, 'function', 'expecter should be a function');
+    result = sample.map(func);
+  }
+  assert.ok(result instanceof Array, 'expecter result should be an array');
+  next(result);
+};
+
 exports.clone = function(obj) {
   return JSON.parse(JSON.stringify(obj));
 };
