@@ -72,6 +72,22 @@ function tests1(sample) {
     });
 
     wheretest(sample, {
+      "integral": {
+        $in: [2345, 4567]
+      }
+    }, function(item) {
+      return item.integral == 2345 || item.integral == 4567;
+    });
+
+    wheretest(sample, {
+      "integral": {
+        $nin: [1234, 5678]
+      }
+    }, function(item) {
+      return item.integral != 1234 && item.integral != 5678;
+    });
+
+    wheretest(sample, {
       $or: [{
           integral: {
             $lt: 2000
