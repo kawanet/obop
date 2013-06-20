@@ -7,7 +7,6 @@
  * @property {String} system.name - Read only. System name: "obop"
  * @property {String} system.version - Read only. System version: e.g. "0.0.1"
  * @property {Bool} settings.nop - Set this true if you prefer a through function returned, instead of null value returned per default, in a case of no operations applied.
- * @property {Bool} settings.throwError - Set this true if you prefer throwing an exception, instead of an Error instance returned per default, in a case of something wrong found.
  *
  * @example
  * // node.js
