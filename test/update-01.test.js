@@ -1,7 +1,5 @@
-var obop = require('../');
 var sample1 = require('./data/sample1.json');
 var sample2 = require('./data/sample2.json');
-var assert = require('chai').assert;
 var common = require('./common');
 
 module.exports = function(prefix, checker) {

@@ -1,4 +1,3 @@
-var obop = require('../');
 var assert = require('chai').assert;
 var MongoClient = require('mongodb').MongoClient;
 var common = require('./common');

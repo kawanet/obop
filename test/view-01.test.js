@@ -1,4 +1,3 @@
-var obop = require('../');
 var sample1 = require('./data/sample1.json');
 var sample2 = require('./data/sample2.json');
 var common = require('./common');
@@ -83,11 +82,5 @@ function tests(checker, sample) {
 
     // function type is not allowed at MongoDB
     // checker(sample, _name, _name, '[Function]');
-  };
-}
-
-function _name(item) {
-  return {
-    name: item.name
   };
 }

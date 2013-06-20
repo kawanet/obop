@@ -1,5 +1,4 @@
 var sample3 = require('./data/sample3.json');
-var assert = require('chai').assert;
 var common = require('./common');
 
 module.exports = function(prefix, checker) {
@@ -77,6 +76,5 @@ function tests(checker, sample) {
       var b = a.b || {};
       return b.c == 3 && b.e == 5;
     });
-
   };
 }

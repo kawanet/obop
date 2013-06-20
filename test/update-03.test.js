@@ -1,6 +1,4 @@
-var obop = require('../');
 var sample3 = require('./data/sample3.json');
-var assert = require('chai').assert;
 var common = require('./common');
 
 // Note: this test works only on obop but not on MongoDB
@@ -135,8 +133,4 @@ function tests(checker, sample) {
       return item;
     });
   };
-}
-
-function through(item) {
-  return item;
 }

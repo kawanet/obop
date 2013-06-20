@@ -30,7 +30,19 @@ module.exports = function(grunt) {
       all: {
         src: jshint_src
       },
-      options: {}
+      options: {
+        "node": true,
+        "browser": true,
+        "bitwise": true,
+        "noarg": true,
+        "regexp": true,
+        "undef": true,
+        "globals": {
+          describe: true, // mocha
+          it: true,
+          after: true
+        }
+      }
     },
 
     // https://github.com/pghalliday/grunt-mocha-test
