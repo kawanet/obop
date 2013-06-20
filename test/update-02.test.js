@@ -3,6 +3,8 @@ var sample1 = require('./data/sample1.json');
 var sample2 = require('./data/sample2.json');
 var common = require('./common');
 
+// Note: this test works only on obop but not on MongoDB
+
 module.exports = function(prefix, checker) {
   prefix = prefix || '';
   checker = checker || common.check_update;
@@ -19,6 +21,15 @@ if (!MPE.DONT_RUN_TESTS_ON_REQUIRE) {
 
 function tests(checker, sample) {
   return function() {
+
+    // null
+    checker(sample, null, null);
+
+    // empty object
+    checker(sample, {}, null);
+
+    // function
+    checker(sample, through, through, '[Function]');
 
     // $push
     checker(sample, {
@@ -42,6 +53,7 @@ function tests(checker, sample) {
     }, puller("bar"));
 
     // multiple
+    // [MongoError: Field name duplication not allowed with modifiers]
     var m1push = pusher("foobar");
     var m1pull = puller(333);
     checker(sample, {
@@ -79,7 +91,8 @@ function pusher(value) {
     } else if ('undefined' == typeof arr) {
       arr = [];
     } else {
-      arr = [arr];
+      // return item; // ignore (MongoDB does this)
+      arr = [arr]; // upgrade (this would be better)
     }
     arr.push(value);
     item.arr = arr;
@@ -103,4 +116,8 @@ function puller(value) {
     if (arr.length != after.length) item.arr = after;
     return item;
   };
+}
+
+function through(item) {
+  return item;
 }

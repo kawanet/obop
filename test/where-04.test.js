@@ -4,6 +4,8 @@ var sample2 = require('./data/sample2.json');
 var assert = require('chai').assert;
 var common = require('./common');
 
+// Note: this test works only on obop but not on MongoDB
+
 describe('where-04', function() {
   describe('sample1', tests(common.check_where, sample1));
 });

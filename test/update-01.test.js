@@ -122,18 +122,5 @@ function tests(checker, sample) {
       item.integral = (item.integral || 0) + 1;
       return item;
     });
-
-    // null
-    checker(sample, null, null);
-
-    // empty object
-    checker(sample, {}, null);
-
-    // function
-    // checker(sample, through, through, '[Function]');
   };
-}
-
-function through(item) {
-  return item;
 }

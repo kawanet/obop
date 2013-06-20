@@ -3,6 +3,8 @@ var sample3 = require('./data/sample3.json');
 var assert = require('chai').assert;
 var common = require('./common');
 
+// Note: this test works only on obop but not on MongoDB
+
 module.exports = function(prefix, checker) {
   prefix = prefix || '';
   checker = checker || common.check_update;
@@ -102,6 +104,7 @@ function tests(checker, sample) {
     });
 
     // $pull
+    // [MongoError: Field name duplication not allowed with modifiers]
     checker(sample, {
       $push: {
         "foo.bar": 333,

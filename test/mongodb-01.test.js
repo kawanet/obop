@@ -41,6 +41,8 @@ function main() {
   require('./view-01.test')('mongodb-01-', check_view);
   require('./order-01.test')('mongodb-01-', check_order);
   require('./update-01.test')('mongodb-01-', check_update);
+  // require('./update-02.test')('mongodb-02-', check_update);
+  // require('./update-03.test')('mongodb-01-', check_update);
 }
 
 function check_where(sample, where, func, mess) {
@@ -90,7 +92,6 @@ function mongodb_view(sample, view, tester, next) {
     collection.find({}, view).sort({
       _id: 1
     }).toArray(function(err, result) {
-      // console.error(result);
       assert.equal(err, null);
       assert.ok(result instanceof Array, 'result should be an array');
       result.forEach(function(item) {
@@ -124,7 +125,6 @@ function mongodb_order(sample, order, tester, next) {
     collection.find({}, {
       _id: 0
     }).sort(order).toArray(function(err, result) {
-      // console.error(result);
       assert.equal(err, null);
       assert.ok(result instanceof Array, 'result should be an array');
       next(result);
@@ -159,8 +159,8 @@ function mongodb_update(sample, update, tester, next) {
   };
   prepare(sample, function() {
     collection.update({}, update, opts, function(err) {
+      assert.equal(err, null);
       collection.find({}, view).sort(order).toArray(function(err, result) {
-        // console.error(result);
         assert.equal(err, null);
         assert.ok(result instanceof Array, 'result should be an array');
         next(result);
