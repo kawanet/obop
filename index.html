@@ -17,7 +17,7 @@
     <div class="wrapper">
       <header>
         <h1 class="header">obop</h1>
-        <p class="header">MongoDB-like Object Operator Translators for JavaScript Array Manipulation</p>
+        <p class="header">MongoDB-style object operators makes array manipulation easy: where/order/update/view</p>
 
         <ul>
           <li class="download"><a class="buttons" href="https://github.com/kawanet/obop/zipball/master">Download ZIP</a></li>
@@ -33,7 +33,7 @@
         <h1>
 <a name="obop" class="anchor" href="#obop"><span class="octicon octicon-link"></span></a>obop</h1>
 
-<p>MongoDB-like Object Operator Translators for JavaScript Array Manipulation</p>
+<p>MongoDB-style object operators makes array manipulation easy: where/order/update/view</p>
 
 <h2>
 <a name="synopsis" class="anchor" href="#synopsis"><span class="octicon octicon-link"></span></a>SYNOPSIS</h2>
@@ -43,10 +43,10 @@
 
 <div class="highlight"><pre><span class="kd">var</span> <span class="nx">obop</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'obop'</span><span class="p">)();</span>
 <span class="kd">var</span> <span class="nx">src</span> <span class="o">=</span> <span class="p">[</span> <span class="p">{</span> <span class="nx">a</span><span class="o">:</span> <span class="mi">1</span> <span class="p">},</span> <span class="p">{</span> <span class="nx">a</span><span class="o">:</span> <span class="mi">2</span> <span class="p">},</span> <span class="p">{</span> <span class="nx">a</span><span class="o">:</span> <span class="mi">3</span> <span class="p">}</span> <span class="p">];</span>
-<span class="kd">var</span> <span class="nx">func</span> <span class="o">=</span> <span class="nx">obop</span><span class="p">.</span><span class="nx">where</span><span class="p">(</span> <span class="p">{</span> <span class="nx">a</span><span class="o">:</span> <span class="mi">2</span> <span class="p">}</span> <span class="p">);</span>
-<span class="kd">var</span> <span class="nx">out</span> <span class="o">=</span> <span class="nx">src</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">func</span><span class="p">);</span>
-<span class="c1">// =&gt; [ { a: 2 } ]</span>
+<span class="kd">var</span> <span class="nx">out</span> <span class="o">=</span> <span class="nx">obop</span><span class="p">.</span><span class="nx">where</span><span class="p">(</span> <span class="nx">src</span><span class="p">,</span> <span class="p">{</span> <span class="nx">a</span><span class="o">:</span> <span class="mi">2</span> <span class="p">}</span> <span class="p">);</span> <span class="c1">// =&gt; [ { a: 2 } ]</span>
 </pre></div>
+
+<p>Install <a href="http://npmjs.org/package/obop">obop</a> module via npm.</p>
 
 <h3>
 <a name="browser-envorinment" class="anchor" href="#browser-envorinment"><span class="octicon octicon-link"></span></a>Browser Envorinment</h3>
@@ -54,20 +54,103 @@
 <div class="highlight"><pre><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"obop.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
 <span class="nt">&lt;script&gt;</span>
   <span class="kd">var</span> <span class="nx">src</span> <span class="o">=</span> <span class="p">[</span> <span class="p">{</span> <span class="nx">a</span><span class="o">:</span> <span class="mi">1</span> <span class="p">},</span> <span class="p">{</span> <span class="nx">a</span><span class="o">:</span> <span class="mi">2</span> <span class="p">},</span> <span class="p">{</span> <span class="nx">a</span><span class="o">:</span> <span class="mi">3</span> <span class="p">}</span> <span class="p">];</span>
-  <span class="kd">var</span> <span class="nx">func</span> <span class="o">=</span> <span class="nx">obop</span><span class="p">.</span><span class="nx">where</span><span class="p">(</span> <span class="p">{</span> <span class="nx">a</span><span class="o">:</span> <span class="mi">2</span> <span class="p">}</span> <span class="p">);</span>
-  <span class="kd">var</span> <span class="nx">out</span> <span class="o">=</span> <span class="nx">src</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">func</span><span class="p">);</span>
-  <span class="c1">// =&gt; [ { a: 2 } ]</span>
+  <span class="kd">var</span> <span class="nx">out</span> <span class="o">=</span> <span class="nx">obop</span><span class="p">.</span><span class="nx">where</span><span class="p">(</span> <span class="nx">src</span><span class="p">,</span> <span class="p">{</span> <span class="nx">a</span><span class="o">:</span> <span class="mi">2</span> <span class="p">}</span> <span class="p">);</span> <span class="c1">// =&gt; [ { a: 2 } ]</span>
 <span class="nt">&lt;/script&gt;</span>
 </pre></div>
 
-<h2>
-<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>INSTALLATION</h2>
+<p>Download <a href="https://raw.github.com/kawanet/obop/master/build/obop.min.js">obop.min.js</a> browser build of this module.</p>
 
-<div class="highlight"><pre>npm install git://github.com/kawanet/obop.git
+<h2>
+<a name="methods" class="anchor" href="#methods"><span class="octicon octicon-link"></span></a>METHODS</h2>
+
+<p>See <a href="http://kawanet.github.io/obop/docs/obop.html">document</a> for more detail.</p>
+
+<h3>
+<a name="query-selectors" class="anchor" href="#query-selectors"><span class="octicon octicon-link"></span></a>Query Selectors</h3>
+
+<p><a href="http://kawanet.github.io/obop/docs/obop.html#where">where()</a> method supports the following query selectors:</p>
+
+<div class="highlight"><pre><span class="p">{</span> <span class="nx">field</span><span class="o">:</span> <span class="nx">value</span> <span class="p">}</span>                            <span class="c1">// equal to</span>
+<span class="p">{</span> <span class="nx">field</span><span class="o">:</span> <span class="p">{</span> <span class="nx">$gt</span><span class="o">:</span> <span class="nx">value</span> <span class="p">}</span> <span class="p">}</span>                   <span class="c1">// greater than</span>
+<span class="p">{</span> <span class="nx">field</span><span class="o">:</span> <span class="p">{</span> <span class="nx">$gte</span><span class="o">:</span> <span class="nx">value</span> <span class="p">}</span> <span class="p">}</span>                  <span class="c1">// greater than or equal to</span>
+<span class="p">{</span> <span class="nx">field</span><span class="o">:</span> <span class="p">{</span> <span class="nx">$in</span><span class="o">:</span> <span class="p">[</span><span class="nx">value1</span><span class="p">,</span> <span class="nx">value2</span><span class="p">,</span> <span class="p">...</span> <span class="p">]</span> <span class="p">}</span> <span class="p">}</span>  <span class="c1">// in</span>
+<span class="p">{</span> <span class="nx">field</span><span class="o">:</span> <span class="p">{</span> <span class="nx">$lt</span><span class="o">:</span> <span class="nx">value</span> <span class="p">}</span> <span class="p">}</span>                   <span class="c1">// less than</span>
+<span class="p">{</span> <span class="nx">field</span><span class="o">:</span> <span class="p">{</span> <span class="nx">$lte</span><span class="o">:</span> <span class="nx">value</span> <span class="p">}</span> <span class="p">}</span>                  <span class="c1">// less than or equal to</span>
+<span class="p">{</span> <span class="nx">field</span><span class="o">:</span> <span class="p">{</span> <span class="nx">$ne</span><span class="o">:</span> <span class="nx">value</span> <span class="p">}</span> <span class="p">}</span>                   <span class="c1">// not equal to</span>
+<span class="p">{</span> <span class="nx">field</span><span class="o">:</span> <span class="p">{</span> <span class="nx">$nin</span><span class="o">:</span> <span class="p">[</span> <span class="nx">value1</span><span class="p">,</span> <span class="nx">value2</span> <span class="p">...</span> <span class="p">]}</span> <span class="p">}</span>  <span class="c1">// not in</span>
+<span class="p">{</span> <span class="nx">$or</span><span class="o">:</span> <span class="p">[</span> <span class="p">{</span> <span class="nx">query1</span> <span class="p">},</span> <span class="p">{</span> <span class="nx">qury2</span> <span class="p">},</span> <span class="p">...</span> <span class="p">]</span> <span class="p">}</span>     <span class="c1">// logical OR</span>
+<span class="p">{</span> <span class="nx">$and</span><span class="o">:</span> <span class="p">[</span> <span class="p">{</span> <span class="nx">query1</span> <span class="p">},</span> <span class="p">{</span> <span class="nx">query2</span> <span class="p">},</span> <span class="p">...</span> <span class="p">]</span> <span class="p">}</span>   <span class="c1">// logical AND</span>
+<span class="p">{</span> <span class="nx">field</span><span class="o">:</span> <span class="p">{</span> <span class="nx">$not</span><span class="o">:</span> <span class="p">{</span> <span class="nx">query</span> <span class="p">}</span> <span class="p">}</span> <span class="p">}</span>              <span class="c1">// not</span>
+<span class="p">{</span> <span class="nx">field</span><span class="o">:</span> <span class="p">{</span> <span class="nx">$exists</span><span class="o">:</span> <span class="kr">boolean</span> <span class="p">}</span> <span class="p">}</span>             <span class="c1">// exists</span>
+<span class="p">{</span> <span class="nx">field</span><span class="o">:</span> <span class="p">{</span> <span class="nx">$size</span><span class="o">:</span> <span class="nx">value</span> <span class="p">}</span> <span class="p">}</span>                 <span class="c1">// array size</span>
+</pre></div>
+
+<p>Example:</p>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">out1</span> <span class="o">=</span> <span class="nx">obop</span><span class="p">.</span><span class="nx">where</span><span class="p">(</span> <span class="nx">src1</span><span class="p">,</span> <span class="p">{</span> <span class="nx">genre</span><span class="o">:</span> <span class="s1">'fruit'</span><span class="p">,</span> <span class="nx">price</span><span class="o">:</span> <span class="p">{</span> <span class="nx">$gt</span><span class="o">:</span> <span class="mi">100</span><span class="p">,</span> <span class="nx">$gt</span><span class="o">:</span> <span class="mi">200</span> <span class="p">}</span> <span class="p">}</span> <span class="p">);</span>
+<span class="kd">var</span> <span class="nx">out2</span> <span class="o">=</span> <span class="nx">obop</span><span class="p">.</span><span class="nx">where</span><span class="p">(</span> <span class="nx">src2</span><span class="p">,</span> <span class="p">{</span> <span class="s1">'review.score'</span><span class="o">:</span> <span class="p">{</span> <span class="nx">$gte</span><span class="o">:</span> <span class="mf">4.0</span> <span class="p">}</span> <span class="p">}</span> <span class="p">);</span>
+</pre></div>
+
+<h3>
+<a name="sort-parameters" class="anchor" href="#sort-parameters"><span class="octicon octicon-link"></span></a>Sort Parameters</h3>
+
+<p><a href="http://kawanet.github.io/obop/docs/obop.html#order">order()</a> method supports the following styles of sort parameters:</p>
+
+<div class="highlight"><pre><span class="p">{</span> <span class="nx">field</span><span class="o">:</span> <span class="mi">1</span> <span class="p">}</span>                                <span class="c1">// ascending</span>
+<span class="p">{</span> <span class="nx">field</span><span class="o">:</span> <span class="o">-</span><span class="mi">1</span> <span class="p">}</span>                               <span class="c1">// descending</span>
+<span class="p">{</span> <span class="nx">field1</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">field2</span><span class="o">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">...</span> <span class="p">}</span>              <span class="c1">// combination</span>
+<span class="p">[</span> <span class="p">[</span> <span class="s1">'field1'</span><span class="p">,</span> <span class="mi">1</span> <span class="p">],</span> <span class="p">[</span> <span class="s1">'field2'</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span> <span class="p">],</span> <span class="p">...</span> <span class="p">]</span>  <span class="c1">// array style</span>
+</pre></div>
+
+<p>Example:</p>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">out1</span> <span class="o">=</span> <span class="nx">obop</span><span class="p">.</span><span class="nx">order</span><span class="p">(</span> <span class="nx">src1</span><span class="p">,</span> <span class="p">{</span> <span class="nx">price</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">stock</span><span class="o">:</span> <span class="o">-</span><span class="mi">1</span> <span class="p">}</span> <span class="p">);</span>
+<span class="kd">var</span> <span class="nx">out2</span> <span class="o">=</span> <span class="nx">obop</span><span class="p">.</span><span class="nx">order</span><span class="p">(</span> <span class="nx">src2</span><span class="p">,</span> <span class="p">[[</span><span class="s1">'price'</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="s1">'stock'</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]]</span> <span class="p">);</span> <span class="c1">// same as above</span>
+</pre></div>
+
+<h3>
+<a name="update-operators" class="anchor" href="#update-operators"><span class="octicon octicon-link"></span></a>Update Operators</h3>
+
+<p><a href="http://kawanet.github.io/obop/docs/obop.html#update">update()</a> method supports the following update operators:</p>
+
+<div class="highlight"><pre><span class="p">{</span> <span class="nx">$set</span><span class="o">:</span> <span class="p">{</span> <span class="nx">field</span><span class="o">:</span> <span class="nx">value</span> <span class="p">}</span> <span class="p">}</span>                  <span class="c1">// set value</span>
+<span class="p">{</span> <span class="nx">$unset</span><span class="o">:</span> <span class="p">{</span> <span class="nx">field</span><span class="o">:</span> <span class="s1">''</span> <span class="p">}</span> <span class="p">}</span>                   <span class="c1">// remove field</span>
+<span class="p">{</span> <span class="nx">$rename</span><span class="o">:</span> <span class="p">{</span> <span class="nx">oldname</span><span class="o">:</span> <span class="nx">newname</span> <span class="p">}</span> <span class="p">}</span>           <span class="c1">// rename field</span>
+<span class="p">{</span> <span class="nx">$inc</span><span class="o">:</span> <span class="p">{</span> <span class="nx">field</span><span class="o">:</span> <span class="nx">amount</span> <span class="p">}</span> <span class="p">}</span>                 <span class="c1">// increment value</span>
+<span class="p">{</span> <span class="nx">$pull</span><span class="o">:</span> <span class="p">{</span> <span class="nx">field</span><span class="o">:</span> <span class="nx">query</span> <span class="p">}</span> <span class="p">}</span>                 <span class="c1">// remove item from array</span>
+<span class="p">{</span> <span class="nx">$push</span><span class="o">:</span> <span class="p">{</span> <span class="nx">field</span><span class="o">:</span> <span class="nx">value</span> <span class="p">}</span> <span class="p">}</span>                 <span class="c1">// add item to array</span>
+</pre></div>
+
+<p>Example:</p>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">out1</span> <span class="o">=</span> <span class="nx">obop</span><span class="p">.</span><span class="nx">order</span><span class="p">(</span> <span class="nx">src1</span><span class="p">,</span> <span class="p">{</span> <span class="nx">$inc</span><span class="o">:</span> <span class="p">{</span> <span class="nx">stock</span><span class="o">:</span> <span class="o">-</span><span class="mi">1</span> <span class="p">},</span> <span class="nx">$set</span><span class="o">:</span> <span class="p">{</span> <span class="s1">'review.score'</span><span class="o">:</span> <span class="mi">4</span> <span class="p">}</span> <span class="p">}</span> <span class="p">);</span>
+<span class="kd">var</span> <span class="nx">out2</span> <span class="o">=</span> <span class="nx">obop</span><span class="p">.</span><span class="nx">order</span><span class="p">(</span> <span class="nx">src2</span><span class="p">,</span> <span class="p">{</span> <span class="nx">$unset</span><span class="o">:</span> <span class="p">{</span> <span class="nx">order</span><span class="o">:</span> <span class="s1">''</span> <span class="p">}</span> <span class="p">}</span> <span class="p">);</span>
+</pre></div>
+
+<h3>
+<a name="projection-parameters" class="anchor" href="#projection-parameters"><span class="octicon octicon-link"></span></a>Projection Parameters</h3>
+
+<p><a href="http://kawanet.github.io/obop/docs/obop.html#view">view()</a> method supports the following styles of projection parameters:</p>
+
+<div class="highlight"><pre><span class="p">{</span> <span class="nx">field1</span><span class="o">:</span> <span class="mi">1</span> <span class="p">}</span>                               <span class="c1">// output fields1 only</span>
+<span class="p">{</span> <span class="nx">field1</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">field2</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="p">...</span> <span class="p">}</span>               <span class="c1">// output fields1, 2 and more</span>
+<span class="p">{</span> <span class="nx">field1</span><span class="o">:</span> <span class="mi">0</span> <span class="p">}</span>                               <span class="c1">// output all fields except for fields1</span>
+<span class="p">{</span> <span class="nx">field1</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">field2</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span> <span class="p">...</span> <span class="p">}</span>               <span class="c1">// except fields1, 2 and more</span>
+</pre></div>
+
+<p>Example:</p>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">out1</span> <span class="o">=</span> <span class="nx">obop</span><span class="p">.</span><span class="nx">view</span><span class="p">(</span> <span class="nx">src1</span><span class="p">,</span> <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">price</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">stock</span><span class="o">:</span> <span class="mi">1</span> <span class="p">}</span> <span class="p">);</span>  <span class="c1">// include fields</span>
+<span class="kd">var</span> <span class="nx">out2</span> <span class="o">=</span> <span class="nx">obop</span><span class="p">.</span><span class="nx">view</span><span class="p">(</span> <span class="nx">src2</span><span class="p">,</span> <span class="p">{</span> <span class="nx">_id</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">secret</span><span class="o">:</span> <span class="mi">0</span> <span class="p">}</span> <span class="p">);</span>            <span class="c1">// exclude fields</span>
 </pre></div>
 
 <h2>
 <a name="links" class="anchor" href="#links"><span class="octicon octicon-link"></span></a>LINKS</h2>
+
+<h3>
+<a name="sources" class="anchor" href="#sources"><span class="octicon octicon-link"></span></a>Sources</h3>
+
+<p><a href="https://github.com/kawanet/obop">https://github.com/kawanet/obop</a></p>
 
 <h3>
 <a name="browser-build" class="anchor" href="#browser-build"><span class="octicon octicon-link"></span></a>Browser Build</h3>
@@ -78,11 +161,6 @@
 <a name="documentation" class="anchor" href="#documentation"><span class="octicon octicon-link"></span></a>Documentation</h3>
 
 <p><a href="http://kawanet.github.io/obop/docs/obop.html">http://kawanet.github.io/obop/docs/obop.html</a></p>
-
-<h3>
-<a name="sources" class="anchor" href="#sources"><span class="octicon octicon-link"></span></a>Sources</h3>
-
-<p><a href="https://github.com/kawanet/obop">https://github.com/kawanet/obop</a></p>
 
 <h3>
 <a name="author" class="anchor" href="#author"><span class="octicon octicon-link"></span></a>Author</h3>
