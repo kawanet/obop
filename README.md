@@ -12,6 +12,8 @@ var src = [ { a: 1 }, { a: 2 }, { a: 3 } ];
 var out = obop.where( src, { a: 2 } ); // => [ { a: 2 } ]
 ```
 
+Install [obop](http://npmjs.org/package/obop) module via npm.
+
 ### Browser Envorinment
 
 ```html
@@ -22,32 +24,37 @@ var out = obop.where( src, { a: 2 } ); // => [ { a: 2 } ]
 </script>
 ```
 
+Download [obop.min.js](https://raw.github.com/kawanet/obop/master/build/obop.min.js) browser build of this module.
+
 ## METHODS
+
+See [document](http://kawanet.github.io/obop/docs/obop.html) for more detail.
 
 ### Query Selectors
 
 [where()](http://kawanet.github.io/obop/docs/obop.html#where) method supports the following query selectors:
 
 ```js
-{ field: value }
-{ field: { $gt: value } }
-{ field: { $gte: value } }
-{ field: { $in: [value1, value2, ... ] } }
-{ field: { $lt: value } }
-{ field: { $lte: value } }
-{ field: { $ne: value } }
-{ field: { $nin: [ value1, value2 ... ]} }
-{ $or: [ { query1 }, { query2 }, ... ] }
-{ $and: [ { query1 }, { query2 }, ... ] }
-{ field: { $not: { query } } }
-{ field: { $exists: boolean } }
-{ field: { $size: value } }
+{ field: value }                            // equal to
+{ field: { $gt: value } }                   // greater than
+{ field: { $gte: value } }                  // greater than or equal to
+{ field: { $in: [value1, value2, ... ] } }  // in
+{ field: { $lt: value } }                   // less than
+{ field: { $lte: value } }                  // less than or equal to
+{ field: { $ne: value } }                   // not equal to
+{ field: { $nin: [ value1, value2 ... ]} }  // not in
+{ $or: [ { query1 }, { qury2 }, ... ] }     // logical OR
+{ $and: [ { query1 }, { query2 }, ... ] }   // logical AND
+{ field: { $not: { query } } }              // not
+{ field: { $exists: boolean } }             // exists
+{ field: { $size: value } }                 // array size
 ```
 
 Example:
 
 ```js
-var out = obop.where( src, { genre: "fruit", price: { $lt: 100 }, "review.score": { $gte: 4.0 } } );
+var out1 = obop.where( src1, { genre: 'fruit', price: { $gt: 100, $gt: 200 } } );
+var out2 = obop.where( src2, { 'review.score': { $gte: 4.0 } } );
 ```
 
 ### Sort Parameters
@@ -55,17 +62,17 @@ var out = obop.where( src, { genre: "fruit", price: { $lt: 100 }, "review.score"
 [order()](http://kawanet.github.io/obop/docs/obop.html#order) method supports the following styles of sort parameters:
 
 ```js
-{ field: 1 } // ascending
-{ field: -1 } // descending
-{ field1: 1, field2: -1 } // combination
-[ [ "field1", 1 ], [ "field2", -1 ] ] // array style
+{ field: 1 }                                // ascending
+{ field: -1 }                               // descending
+{ field1: 1, field2: -1, ... }              // combination
+[ [ 'field1', 1 ], [ 'field2', -1 ], ... ]  // array style
 ```
 
 Example:
 
 ```js
 var out1 = obop.order( src1, { price: 1, stock: -1 } );
-var out2 = obop.order( src2, [[ "price", 1], ["stock", -1]] );
+var out2 = obop.order( src2, [['price', 1], ['stock', -1]] ); // same as above
 ```
 
 ### Update Operators
@@ -73,19 +80,19 @@ var out2 = obop.order( src2, [[ "price", 1], ["stock", -1]] );
 [update()](http://kawanet.github.io/obop/docs/obop.html#update) method supports the following update operators:
 
 ```js
-{ $set: { field: value } }
-{ $unset: { field: "" } }
-{ $rename: { oldname: newname } }
-{ $inc: { field: amount } }
-{ $pull: { field: query } }
-{ $push: { field: value } }
+{ $set: { field: value } }                  // set value
+{ $unset: { field: '' } }                   // remove field
+{ $rename: { oldname: newname } }           // rename field
+{ $inc: { field: amount } }                 // increment value
+{ $pull: { field: query } }                 // remove item from array
+{ $push: { field: value } }                 // add item to array
 ```
 
 Example:
 
 ```js
-var out1 = obop.order( src1, { $inc: { stock: -1 }, $set: { "review.score": 4 } } );
-var out2 = obop.order( src2, { $unset: { order: "" },  } );
+var out1 = obop.order( src1, { $inc: { stock: -1 }, $set: { 'review.score': 4 } } );
+var out2 = obop.order( src2, { $unset: { order: '' } } );
 ```
 
 ### Projection Parameters
@@ -93,26 +100,24 @@ var out2 = obop.order( src2, { $unset: { order: "" },  } );
 [view()](http://kawanet.github.io/obop/docs/obop.html#view) method supports the following styles of projection parameters:
 
 ```js
-{ field1: 1 } // output fields1 only
-{ field1: 1, field2: 1, ... } // include fields1, 2 and more
-{ field1: 0 } // output all fields except for fields1
-{ field1: 0, field2: 0, ... } // exclude fields1, 2 and more
+{ field1: 1 }                               // output fields1 only
+{ field1: 1, field2: 1, ... }               // output fields1, 2 and more
+{ field1: 0 }                               // output all fields except for fields1
+{ field1: 0, field2: 0, ... }               // except fields1, 2 and more
 ```
 
 Example:
 
 ```js
-var out1 = obop.view( src1, { name: 1, price: 1, stock: 1 } );
-var out2 = obop.view( src2, { _id: 0, secret: 0 } );
-```
-
-## INSTALLATION
-
-```sh
-npm install http://git@github.com:kawanet/obop.git
+var out1 = obop.view( src1, { name: 1, price: 1, stock: 1 } );  // include fields
+var out2 = obop.view( src2, { _id: 0, secret: 0 } );            // exclude fields
 ```
 
 ## LINKS
+
+### Sources
+
+https://github.com/kawanet/obop
 
 ### Browser Build
 
@@ -121,10 +126,6 @@ https://raw.github.com/kawanet/obop/master/build/obop.min.js
 ### Documentation
 
 http://kawanet.github.io/obop/docs/obop.html
-
-### Sources
-
-https://github.com/kawanet/obop
 
 ### Author
 
