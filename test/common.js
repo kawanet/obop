@@ -92,7 +92,14 @@ exports.check_order = function(sample, order, func, mess) {
           expect = expect.map(projection);
         }
 
-        assert.deepEqual(actual, expect);
+        // assert.deepEqual(actual, expect);
+
+        actual = JSON.stringify(actual, null, "");
+        expect = JSON.stringify(expect, null, "");
+        actual = actual.replace(/\},\{"/g, '},\n{"');
+        expect = expect.replace(/\},\{"/g, '},\n{"');
+        assert.equal(actual, expect);
+
         done();
       });
     });

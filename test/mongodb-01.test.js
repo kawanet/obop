@@ -46,6 +46,7 @@ function main() {
   require('./view-02.test')('mongodb-01-', check_view);
   require('./order-01.test')('mongodb-01-', check_order);
   require('./order-02.test')('mongodb-01-', check_order);
+  require('./order-03.test')('mongodb-01-', check_order);
   require('./update-01.test')('mongodb-01-', check_update);
   // require('./update-02.test')('mongodb-02-', check_update);
   // require('./update-03.test')('mongodb-01-', check_update);
@@ -115,6 +116,8 @@ function check_order(sample, order, func, mess) {
       mongodb_order(sample, order, func, function(expect) {
         actual = JSON.stringify(actual, null, "");
         expect = JSON.stringify(expect, null, "");
+        actual = actual.replace(/\},\{"/g, '},\n{"');
+        expect = expect.replace(/\},\{"/g, '},\n{"');
         assert.equal(actual, expect);
         done();
       });
