@@ -1,0 +1,11 @@
+[
+   { "name": "alpha" },
+   { "name": "bravo",   "foo": 555 },
+   { "name": "charlie", "foo": {} },
+   { "name": "delta",   "foo": { "bar": 123 } },
+   { "name": "echo",    "foo": { "bar": 345, "baz": 111 } },
+   { "name": "foxtrot", "foo": { "bar": 456, "qux": { "quux": 1234 } } },
+   { "name": "hotel",   "foo": { "bar": 234, "qux": { "quux": 3456 } }, "hoge": { "fuga": 5678 } },
+   { "name": "india",   "foo": { "qux": { "quux": 2345 } } },
+   { "name": "juliet",  "foo": { "baz": 999 }, "hoge": { "fuga": 4567 }  }
+]
