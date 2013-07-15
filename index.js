@@ -1,7 +1,7 @@
 /*! index.js */
 
 /**
- * This class provides a set of array manipulation methods:
+ * This class provides a set of methods
  * [where()]{@linkcode obop#where}
  * /
  * [order()]{@linkcode obop#order}
@@ -9,7 +9,7 @@
  * [update()]{@linkcode obop#update}
  * /
  * [view()]{@linkcode obop#view}
- * powered with MongoDB-style object operators.
+ * which manipulate array such like MongoDB-style object operators do.
  *
  * @class obop
  * @property {String} system.name - Read only. System name: "obop"

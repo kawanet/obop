@@ -91,8 +91,8 @@ var out2 = obop.order( src2, [['price', 1], ['stock', -1]] ); // same as above
 Example:
 
 ```js
-var out1 = obop.order( src1, { $inc: { stock: -1 }, $set: { 'review.score': 4 } } );
-var out2 = obop.order( src2, { $unset: { order: '' } } );
+var out1 = obop.update( src1, { $inc: { stock: -1 }, $set: { 'review.score': 4 } } );
+var out2 = obop.update( src2, { $unset: { order: '' } } );
 ```
 
 ### Projection Parameters

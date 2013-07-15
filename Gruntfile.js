@@ -66,7 +66,11 @@ module.exports = function(grunt) {
         src: jsdoc_src
       },
       options: {
-        destination: 'gh-pages/docs'
+        destination: 'gh-pages/docs',
+        "plugins": ["plugins/markdown"],
+        "markdown": {
+          "parser": "gfm"
+        }
       }
     },
 
