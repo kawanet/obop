@@ -1,6 +1,6 @@
 {
   "name": "obop",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "MongoDB-style object operators makes array manipulation easy: where/order/update/view",
   "main": "index.js",
   "devDependencies": {
