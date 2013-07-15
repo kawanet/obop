@@ -43,6 +43,7 @@ function main() {
   require('./where-02.test')('mongodb-01-', check_where);
   require('./where-03.test')('mongodb-01-', check_where);
   require('./view-01.test')('mongodb-01-', check_view);
+  require('./view-02.test')('mongodb-01-', check_view);
   require('./order-01.test')('mongodb-01-', check_order);
   require('./order-02.test')('mongodb-01-', check_order);
   require('./update-01.test')('mongodb-01-', check_update);
