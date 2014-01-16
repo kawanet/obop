@@ -71,6 +71,12 @@ function tests1(checker, sample) {
 
     checker(sample, {
       "integral": {
+        $in: null
+      }
+    }, new Error("invalid query"));
+
+    checker(sample, {
+      "integral": {
         $nin: [1234, 5678]
       }
     }, function(item) {
@@ -93,6 +99,10 @@ function tests1(checker, sample) {
     });
 
     checker(sample, {
+      $or: [],
+    }, new Error("$or requires nonempty array"));
+
+    checker(sample, {
       $and: [{
           integral: {
             $gt: 2000
@@ -106,6 +116,10 @@ function tests1(checker, sample) {
     }, function(item) {
       return item.integral > 2000 && item.numeric < 30;
     });
+
+    checker(sample, {
+      $and: [],
+    }, new Error("$and expression must be a nonempty array"));
 
     checker(sample, {
       "integral": {

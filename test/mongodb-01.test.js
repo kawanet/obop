@@ -54,9 +54,11 @@ function main() {
 
 function check_where(sample, where, func, mess) {
   mess = mess || JSON.stringify(where);
+  if (func instanceof Error) mess += " // " + func;
   it(mess, function(done) {
     common.obop_where(sample, where, func, function(actual) {
       mongodb_where(sample, where, func, function(expect) {
+        if (func instanceof Error) return done();
         assert.deepEqual(actual, expect);
         done();
       });
@@ -71,7 +73,13 @@ function mongodb_where(sample, where, tester, next) {
     }).sort({
       _id: 1
     }).toArray(function(err, result) {
-      assert.equal(err, null);
+      if (tester instanceof Error) {
+        assert.ok(err instanceof Error, 'error should be fired');
+        next(err);
+        return;
+      } else {
+        assert.equal(err, null);
+      }
       assert.ok(result instanceof Array, 'result should be an array');
       next(result);
     });

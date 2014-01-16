@@ -6,8 +6,10 @@ var common = exports;
 
 exports.check_where = function(sample, where, func, mess) {
   mess = mess || JSON.stringify(where);
+  if (func instanceof Error) mess += " // " + func;
   it(mess, function(done) {
     common.obop_where(sample, where, func, function(actual) {
+      if (func instanceof Error) return done();
       common.expect_where(sample, where, func, function(expect) {
         assert.deepEqual(actual, expect);
         done();
@@ -19,8 +21,19 @@ exports.check_where = function(sample, where, func, mess) {
 exports.obop_where = function(sample, where, func, next) {
   sample = common.clone(sample);
   var result = sample;
-  var selector = obop.where(where);
-  assert.notOk(selector instanceof Error, 'where() should not return an error: ' + selector);
+  var selector;
+  try {
+    selector = obop.where(where);
+  } catch(e) {
+    selector = e;
+  }
+  if (func instanceof Error) {
+    assert.ok(selector instanceof Error, 'where() should return an error: ' + selector);
+    next(selector);
+    return;
+  } else {
+    assert.notOk(selector instanceof Error, 'where() should not return an error: ' + selector);
+  }
   if (selector) {
     assert.equal(typeof selector, 'function', 'selector should be a function');
     result = sample.filter(selector);
@@ -32,6 +45,10 @@ exports.obop_where = function(sample, where, func, next) {
 exports.expect_where = function(sample, where, func, next) {
   sample = common.clone(sample);
   var result = sample;
+  if (func instanceof Error) {
+    next(); // ignore
+    return;
+  }
   if (func) {
     assert.equal(typeof func, 'function', 'expecter should be a function');
     result = sample.filter(func);
