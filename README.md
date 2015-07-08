@@ -1,4 +1,4 @@
-# obop
+# obop [![Build Status](https://travis-ci.org/kawanet/obop.svg?branch=master)](https://travis-ci.org/kawanet/obop)
 
 MongoDB-style object operators makes array manipulation easy: where/order/update/view
 
