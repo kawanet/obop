@@ -1,6 +1,6 @@
 {
   "name": "obop",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "MongoDB-style object operators makes array manipulation easy: where/order/update/view",
   "repository": {
     "type": "git",
