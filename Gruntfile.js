@@ -81,7 +81,9 @@ module.exports = function(grunt) {
           './build/obop.browserify.js': ['./index.js']
         },
         options: {
-          standalone: 'obop'
+          browserifyOptions: {
+            standalone: 'obop'
+          }
         }
       }
     },
