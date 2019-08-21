@@ -24,7 +24,7 @@ Install [obop](http://npmjs.org/package/obop) module via npm.
 </script>
 ```
 
-Download [obop.min.js](https://rawgit.com/kawanet/obop/master/build/obop.min.js) browser build of this module.
+Download [obop.min.js](https://raw.githubusercontent.com/kawanet/obop/master/build/obop.min.js) browser build of this module.
 
 ## METHODS
 
@@ -121,7 +121,7 @@ https://github.com/kawanet/obop
 
 ### Browser Build
 
-https://rawgit.com/kawanet/obop/master/build/obop.min.js
+https://raw.githubusercontent.com/kawanet/obop/master/build/obop.min.js
 
 ### Documentation
 
@@ -133,7 +133,7 @@ https://github.com/kawanet
 
 ## LICENCE
 
-Copyright 2013-2016 @kawanet
+Copyright 2013-2019 @kawanet
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
