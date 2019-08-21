@@ -7,7 +7,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-jsdoc');
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-watch');
 
   grunt.loadTasks('./tasks');
 
@@ -54,17 +53,6 @@ module.exports = function(grunt) {
         },
         options: {
           banner: '/*! ' + pkg.name + ' ' + pkg.version + ' */\n'
-        }
-      }
-    },
-
-    // https://github.com/gruntjs/grunt-contrib-watch
-    watch: {
-      docs: {
-        files: jsdoc_src,
-        tasks: ['jsdoc'],
-        options: {
-          interrupt: true,
         }
       }
     },
