@@ -4,8 +4,6 @@ module.exports = function(grunt) {
 
   var pkg = require('./package.json');
 
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-jsdoc');
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -13,52 +11,12 @@ module.exports = function(grunt) {
 
   grunt.loadTasks('./tasks');
 
-  var jshint_src = [
-      './*.js',
-      './*.json',
-      'lib/**/*.js',
-      'lib/**/*.json',
-      'tasks/**/*.js',
-      'test/**/*.js',
-      'test/**/*.json'
-  ];
-
   var jsdoc_src = [
-      './index.js',
-      'lib/**/*.js'
+    './index.js',
+    'lib/**/*.js'
   ];
 
   grunt.initConfig({
-
-    // https://github.com/gruntjs/grunt-contrib-jshint
-    jshint: {
-      all: {
-        src: jshint_src
-      },
-      options: {
-        "node": true,
-        "browser": true,
-        "bitwise": true,
-        "noarg": true,
-        "regexp": true,
-        "undef": true,
-        "globals": {
-          describe: true, // mocha
-          it: true,
-          after: true
-        }
-      }
-    },
-
-    // https://github.com/pghalliday/grunt-mocha-test
-    mochaTest: {
-      all: {
-        src: ['test/**/*.test.js']
-      },
-      options: {
-        reporter: 'spec'
-      }
-    },
 
     // https://github.com/krampstudio/grunt-jsdoc-plugin
     jsdoc: {
@@ -102,13 +60,6 @@ module.exports = function(grunt) {
 
     // https://github.com/gruntjs/grunt-contrib-watch
     watch: {
-      scripts: {
-        files: jshint_src,
-        tasks: ['default'],
-        options: {
-          interrupt: true,
-        }
-      },
       docs: {
         files: jsdoc_src,
         tasks: ['jsdoc'],
@@ -146,7 +97,6 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('default', ['jshint', 'mochaTest']);
   grunt.registerTask('build', ['quoteJson', 'browserify', 'uglify']);
-  grunt.registerTask('all', ['default', 'jsdoc', 'build']);
+  grunt.registerTask('all', ['jsdoc', 'build']);
 };
