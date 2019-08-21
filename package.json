@@ -3,6 +3,9 @@
   "description": "MongoDB-style object operators makes array manipulation easy: where/order/update/view",
   "version": "0.1.0",
   "author": "https://github.com/kawanet",
+  "bugs": {
+    "url": "https://github.com/kawanet/obop/issues"
+  },
   "devDependencies": {
     "chai": "^4.2.0",
     "grunt": "^0.4.5",
@@ -10,10 +13,12 @@
     "grunt-cli": "^0.1.13",
     "grunt-contrib-uglify": "^0.11.1",
     "grunt-jsdoc": "^1.1.0",
+    "jshint": "^2.10.2",
     "mocha": "^6.2.0",
     "mongodb": "^2.1.21",
     "undefined": "^0.1.0"
   },
+  "homepage": "https://github.com/kawanet/obop#readme",
   "jshintConfig": {
     "bitwise": true,
     "browser": true,
