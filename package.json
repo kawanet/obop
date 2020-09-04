@@ -15,7 +15,7 @@
     "grunt-jsdoc": "^1.1.0",
     "jshint": "^2.10.2",
     "mocha": "^6.2.0",
-    "mongodb": "^2.1.21",
+    "mongodb": "^3.6.1",
     "undefined": "^0.1.0"
   },
   "homepage": "https://github.com/kawanet/obop#readme",
