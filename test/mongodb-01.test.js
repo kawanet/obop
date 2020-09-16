@@ -1,4 +1,4 @@
-var assert = require('chai').assert;
+var assert = require('assert');
 var common = require('./common');
 
 exports.DONT_RUN_TESTS_ON_REQUIRE = true;
