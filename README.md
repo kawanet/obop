@@ -1,4 +1,4 @@
-# obop [![npm version](https://badge.fury.io/js/obop.svg)](http://badge.fury.io/js/obop) [![Build Status](https://travis-ci.org/kawanet/obop.svg?branch=master)](https://travis-ci.org/kawanet/obop)
+# obop [![npm version](https://badge.fury.io/js/obop.svg)](https://www.npmjs.com/package/obop) [![Node.js CI](https://github.com/kawanet/obop/workflows/Node.js%20CI/badge.svg?branch=master)](https://github.com/kawanet/obop/actions/)
 
 MongoDB-style object operators makes array manipulation easy: where/order/update/view
 
@@ -133,7 +133,7 @@ https://github.com/kawanet
 
 ## LICENCE
 
-Copyright 2013-2019 @kawanet
+Copyright 2013-2020 @kawanet
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
