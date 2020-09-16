@@ -1,7 +1,7 @@
 {
   "name": "obop",
   "description": "MongoDB-style object operators makes array manipulation easy: where/order/update/view",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "https://github.com/kawanet",
   "bugs": {
     "url": "https://github.com/kawanet/obop/issues"
