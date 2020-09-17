@@ -1,0 +1,18 @@
+<html>
+<head>
+  <title>obop</title>
+  <script src="../../build/obop.min.js"></script>
+</head>
+<body>
+<script>
+  try {
+    var fn = obop.update({$set: {hello: "World!"}});
+    var result = fn({});
+    result = JSON.stringify(result);
+    document.write(result);
+  } catch (e) {
+    document.write(e + "");
+  }
+</script>
+</body>
+</html>
