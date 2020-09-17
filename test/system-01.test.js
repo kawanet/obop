@@ -1,5 +1,5 @@
 var obop = require('../');
-var assert = require('chai').assert;
+var assert = require('assert');
 
 describe('system', function() {
   it('name', function(done) {

@@ -1,6 +1,6 @@
 /*! common.js */
 
-var assert = require('chai').assert;
+var assert = require('assert');
 var obop = require('../');
 var common = exports;
 
@@ -32,7 +32,7 @@ exports.obop_where = function(sample, where, func, next) {
     next(selector);
     return;
   } else {
-    assert.notOk(selector instanceof Error, 'where() should not return an error: ' + selector);
+    assert.ok(!(selector instanceof Error), 'where() should not return an error: ' + selector);
   }
   if (selector) {
     assert.equal(typeof selector, 'function', 'selector should be a function');
@@ -73,7 +73,7 @@ exports.obop_view = function(sample, view, func, next) {
   sample = common.clone(sample);
   var result = sample;
   var projection = obop.view(view);
-  assert.notOk(projection instanceof Error, 'view() should not return an error: ' + projection);
+  assert.ok(!(projection instanceof Error), 'view() should not return an error: ' + projection);
   if (projection) {
     assert.equal(typeof projection, 'function', 'projection should be a function');
     result = sample.map(projection);
@@ -127,7 +127,7 @@ exports.obop_order = function(sample, order, func, next) {
   sample = common.clone(sample);
   var result = sample;
   var sorter = obop.order(order);
-  assert.notOk(sorter instanceof Error, 'order() should not return an error: ' + sorter);
+  assert.ok(!(sorter instanceof Error), 'order() should not return an error: ' + sorter);
   if (sorter) {
     assert.equal(typeof sorter, 'function', 'sorter should be a function');
     result = sample.sort(sorter);
@@ -165,7 +165,7 @@ exports.obop_update = function(sample, update, func, next) {
   sample = common.clone(sample);
   var result = sample;
   var updater = obop.update(update);
-  assert.notOk(updater instanceof Error, 'update() should not return an error: ' + updater);
+  assert.ok(!(updater instanceof Error), 'update() should not return an error: ' + updater);
   if (updater) {
     assert.equal(typeof updater, 'function', 'updater should be a function');
     result = sample.map(updater);
