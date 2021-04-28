@@ -1,6 +1,11 @@
-*~
-node_modules/
-.DS_Store
-.idea/
 *.browserify.js
+*~
+.DS_Store
+.Thumbs
+.idea/
+.vscode/
 gh-pages/
+node_modules/
+npm-debug.log*
+package-lock.json
+~$*
