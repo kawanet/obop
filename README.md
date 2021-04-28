@@ -1,4 +1,7 @@
-# obop [![npm version](https://badge.fury.io/js/obop.svg)](https://www.npmjs.com/package/obop) [![Node.js CI](https://github.com/kawanet/obop/workflows/Node.js%20CI/badge.svg?branch=master)](https://github.com/kawanet/obop/actions/)
+# obop
+
+[![npm version](https://badge.fury.io/js/obop.svg)](https://www.npmjs.com/package/obop) 
+[![Node.js CI](https://github.com/kawanet/obop/workflows/Node.js%20CI/badge.svg?branch=master)](https://github.com/kawanet/obop/actions/)
 
 MongoDB-style object operators makes array manipulation easy: where/order/update/view
 
@@ -7,9 +10,9 @@ MongoDB-style object operators makes array manipulation easy: where/order/update
 ### Node.js Environment
 
 ```js
-var obop = require('obop')();
-var src = [ { a: 1 }, { a: 2 }, { a: 3 } ];
-var out = obop.where( src, { a: 2 } ); // => [ { a: 2 } ]
+const obop = require('obop')();
+const src = [ { a: 1 }, { a: 2 }, { a: 3 } ];
+const out = obop.where( src, { a: 2 } ); // => [ { a: 2 } ]
 ```
 
 Install [obop](http://npmjs.org/package/obop) module via npm.
@@ -19,12 +22,12 @@ Install [obop](http://npmjs.org/package/obop) module via npm.
 ```html
 <script src="obop.min.js"></script>
 <script>
-  var src = [ { a: 1 }, { a: 2 }, { a: 3 } ];
-  var out = obop.where( src, { a: 2 } ); // => [ { a: 2 } ]
+  const src = [ { a: 1 }, { a: 2 }, { a: 3 } ];
+  const out = obop.where( src, { a: 2 } ); // => [ { a: 2 } ]
 </script>
 ```
 
-Download [obop.min.js](https://raw.githubusercontent.com/kawanet/obop/master/build/obop.min.js) browser build of this module.
+Download [obop.min.js](https://cdn.jsdelivr.net/npm/obop/build/obop.min.js) browser build of this module.
 
 ## METHODS
 
@@ -53,8 +56,8 @@ See [document](http://kawanet.github.io/obop/docs/obop.html) for more detail.
 Example:
 
 ```js
-var out1 = obop.where( src1, { genre: 'fruit', price: { $gt: 100, $gt: 200 } } );
-var out2 = obop.where( src2, { 'review.score': { $gte: 4.0 } } );
+const out1 = obop.where( src1, { genre: 'fruit', price: { $gt: 100, $gt: 200 } } );
+const out2 = obop.where( src2, { 'review.score': { $gte: 4.0 } } );
 ```
 
 ### Sort Parameters
@@ -71,8 +74,8 @@ var out2 = obop.where( src2, { 'review.score': { $gte: 4.0 } } );
 Example:
 
 ```js
-var out1 = obop.order( src1, { price: 1, stock: -1 } );
-var out2 = obop.order( src2, [['price', 1], ['stock', -1]] ); // same as above
+const out1 = obop.order( src1, { price: 1, stock: -1 } );
+const out2 = obop.order( src2, [['price', 1], ['stock', -1]] ); // same as above
 ```
 
 ### Update Operators
@@ -91,8 +94,8 @@ var out2 = obop.order( src2, [['price', 1], ['stock', -1]] ); // same as above
 Example:
 
 ```js
-var out1 = obop.update( src1, { $inc: { stock: -1 }, $set: { 'review.score': 4 } } );
-var out2 = obop.update( src2, { $unset: { order: '' } } );
+const out1 = obop.update( src1, { $inc: { stock: -1 }, $set: { 'review.score': 4 } } );
+const out2 = obop.update( src2, { $unset: { order: '' } } );
 ```
 
 ### Projection Parameters
@@ -109,31 +112,19 @@ var out2 = obop.update( src2, { $unset: { order: '' } } );
 Example:
 
 ```js
-var out1 = obop.view( src1, { name: 1, price: 1, stock: 1 } );  // include fields
-var out2 = obop.view( src2, { _id: 0, secret: 0 } );            // exclude fields
+const out1 = obop.view( src1, { name: 1, price: 1, stock: 1 } );  // include fields
+const out2 = obop.view( src2, { _id: 0, secret: 0 } );            // exclude fields
 ```
 
 ## LINKS
 
-### Sources
-
-https://github.com/kawanet/obop
-
-### Browser Build
-
-https://raw.githubusercontent.com/kawanet/obop/master/build/obop.min.js
-
-### Documentation
-
-http://kawanet.github.io/obop/docs/obop.html
-
-### Author
-
-https://github.com/kawanet
+- https://cdn.jsdelivr.net/npm/obop/build/obop.min.js
+- https://github.com/kawanet/obop
+- https://www.npmjs.com/package/obop
 
 ## LICENCE
 
-Copyright 2013-2020 @kawanet
+Copyright 2013-2021 @kawanet
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
