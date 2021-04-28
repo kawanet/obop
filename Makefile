@@ -2,10 +2,10 @@
 
 SRC=index.js lib/*.js lib/*.json
 
-all: build/obop.min.js jsdoc
+all: build/obop.min.js jsdoc build/test.browserify.js
 
 clean:
-	/bin/rm -fr build/obop.*.js gh-pages/docs/
+	/bin/rm -fr build/ gh-pages/docs/
 
 test:
 	./node_modules/.bin/jshint .
@@ -15,7 +15,11 @@ lib/system.json: package.json
 	node -e 'require("fs").writeFileSync("lib/system.json", JSON.stringify(require("./").view({name:1, version:1})(require("./package.json")), null, 2))'
 
 build/obop.browserify.js: $(SRC)
-	./node_modules/.bin/browserify --standalone obop index.js --outfile $@ --debug --verbose
+	./node_modules/.bin/browserify --list index.js
+	./node_modules/.bin/browserify -s obop index.js -o $@
+
+build/test.browserify.js: $(SRC) test/*.js
+	./node_modules/.bin/browserify test/*.js -o $@ -t [ browserify-sed "s#require\(.\.\./.\)#require('../browser/import')#g" ]
 
 build/obop.min.js: build/obop.browserify.js
 	./node_modules/.bin/terser --compress --mangle --output $@ --comments false -- $<
