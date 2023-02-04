@@ -124,7 +124,7 @@ const out2 = obop.view( src2, { _id: 0, secret: 0 } );            // exclude fie
 
 ## LICENCE
 
-Copyright 2013-2021 @kawanet
+Copyright 2013-2023 @kawanet
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
