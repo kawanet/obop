@@ -27,7 +27,10 @@
     "browser": true,
     "mocha": true,
     "noarg": true,
+    "nocomma": true,
     "node": true,
+    "nonbsp": true,
+    "nonew": true,
     "regexp": true,
     "undef": true,
     "unused": true
