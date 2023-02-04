@@ -1,6 +1,4 @@
-var obop = require('../');
 var sample4 = require('./data/sample4.json');
-var assert = require('assert');
 var common = require('./common');
 
 module.exports = function(prefix, checker) {

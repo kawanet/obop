@@ -29,7 +29,8 @@
     "noarg": true,
     "node": true,
     "regexp": true,
-    "undef": true
+    "undef": true,
+    "unused": true
   },
   "keywords": [
     "array",
