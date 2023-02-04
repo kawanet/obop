@@ -1,7 +1,7 @@
 {
   "name": "obop",
   "description": "MongoDB-style object operators makes array manipulation easy: where/order/update/view",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "author": "https://github.com/kawanet",
   "bugs": {
     "url": "https://github.com/kawanet/obop/issues"
@@ -10,9 +10,9 @@
     "browserify": "^17.0.0",
     "browserify-sed": "^0.8.0",
     "jsdoc": "^3.6.6",
-    "jshint": "^2.12.0",
-    "mocha": "^8.3.2",
-    "terser": "^5.7.0"
+    "jshint": "^2.13.6",
+    "mocha": "^10.2.0",
+    "terser": "^5.16.3"
   },
   "files": [
     "LICENSE",
@@ -25,11 +25,7 @@
   "jshintConfig": {
     "bitwise": true,
     "browser": true,
-    "globals": {
-      "describe": true,
-      "it": true,
-      "after": true
-    },
+    "mocha": true,
     "noarg": true,
     "node": true,
     "regexp": true,
@@ -50,6 +46,7 @@
   },
   "scripts": {
     "build": "make clean all",
+    "prepack": "npm run build && npm test",
     "test": "make test"
   }
 }
