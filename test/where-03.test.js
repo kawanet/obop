@@ -1,3 +1,5 @@
+/* jshint eqeqeq:false */
+
 var sample1 = require('./data/sample1.json');
 var sample2 = require('./data/sample2.json');
 var sample3 = require('./data/sample3.json');
@@ -144,7 +146,7 @@ function tests2(checker, sample) {
       }
     }, function(item) {
       if (!item) return false;
-      if ('undefined' == typeof item.arr) return false;
+      if ('undefined' === typeof item.arr) return false;
       if (!(item.arr instanceof Array)) return false;
       return !item.arr.length;
     });
@@ -155,9 +157,9 @@ function tests2(checker, sample) {
       }
     }, function(item) {
       if (!item) return false;
-      if ('undefined' == typeof item.arr) return false;
+      if ('undefined' === typeof item.arr) return false;
       if (!(item.arr instanceof Array)) return false;
-      return item.arr.length == 1;
+      return item.arr.length === 1;
     });
 
     checker(sample, {
@@ -167,7 +169,7 @@ function tests2(checker, sample) {
     }, function(item) {
       var arr = item.arr || [];
       if (!(arr instanceof Array)) arr = [arr];
-      return arr.length == 6;
+      return arr.length === 6;
     });
   };
 }

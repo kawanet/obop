@@ -25,6 +25,7 @@
   "jshintConfig": {
     "bitwise": true,
     "browser": true,
+    "eqeqeq": true,
     "mocha": true,
     "noarg": true,
     "nocomma": true,
