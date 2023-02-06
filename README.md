@@ -11,8 +11,11 @@ MongoDB-style object operators makes array manipulation easy: where/order/update
 
 ```js
 const obop = require('obop')();
-const src = [ { a: 1 }, { a: 2 }, { a: 3 } ];
-const out = obop.where( src, { a: 2 } ); // => [ { a: 2 } ]
+const array = [{a: 1}, {a: 2}, {a: 3}];
+const out = obop.where(array, {a: 2}); // => [ { a: 2 } ]
+
+// OR
+const out = array.filter(obop.where({a: 2})); // => [ { a: 2 } ]
 ```
 
 Install [obop](http://npmjs.org/package/obop) module via npm.
@@ -22,8 +25,8 @@ Install [obop](http://npmjs.org/package/obop) module via npm.
 ```html
 <script src="obop.min.js"></script>
 <script>
-  const src = [ { a: 1 }, { a: 2 }, { a: 3 } ];
-  const out = obop.where( src, { a: 2 } ); // => [ { a: 2 } ]
+    const array = [{a: 1}, {a: 2}, {a: 3}];
+    const out = obop.where(array, {a: 2}); // => [ { a: 2 } ]
 </script>
 ```
 
@@ -56,8 +59,12 @@ See [document](http://kawanet.github.io/obop/docs/obop.html) for more detail.
 Example:
 
 ```js
-const out1 = obop.where( src1, { genre: 'fruit', price: { $gt: 100, $gt: 200 } } );
-const out2 = obop.where( src2, { 'review.score': { $gte: 4.0 } } );
+const out1 = obop.where(array1, {genre: 'fruit', price: {$gt: 100, $gt: 200}});
+const out2 = obop.where(array2, {'review.score': {$gte: 4.0}});
+
+// OR
+const out1 = array1.filter(obop.where({genre: 'fruit', price: {$gt: 100, $gt: 200}}));
+const out2 = array2.filter(obop.where({'review.score': {$gte: 4.0}}));
 ```
 
 ### Sort Parameters
@@ -74,8 +81,12 @@ const out2 = obop.where( src2, { 'review.score': { $gte: 4.0 } } );
 Example:
 
 ```js
-const out1 = obop.order( src1, { price: 1, stock: -1 } );
-const out2 = obop.order( src2, [['price', 1], ['stock', -1]] ); // same as above
+obop.order(array1, {price: 1, stock: -1});
+obop.order(array2, [['price', 1], ['stock', -1]]); // same as above
+
+// OR
+array1.sort(obop.order({price: 1, stock: -1}));
+array2.sort(obop.order([['price', 1], ['stock', -1]])); // same as above
 ```
 
 ### Update Operators
@@ -94,8 +105,12 @@ const out2 = obop.order( src2, [['price', 1], ['stock', -1]] ); // same as above
 Example:
 
 ```js
-const out1 = obop.update( src1, { $inc: { stock: -1 }, $set: { 'review.score': 4 } } );
-const out2 = obop.update( src2, { $unset: { order: '' } } );
+obop.update(array1, {$inc: {stock: -1}, $set: {'review.score': 4}});
+obop.update(array2, {$unset: {order: ''}});
+
+// OR
+array1.forEach(obop.update({$inc: {stock: -1}, $set: {'review.score': 4}}));
+array2.forEach(obop.update({$unset: {order: ''}}));
 ```
 
 ### Projection Parameters
@@ -112,8 +127,12 @@ const out2 = obop.update( src2, { $unset: { order: '' } } );
 Example:
 
 ```js
-const out1 = obop.view( src1, { name: 1, price: 1, stock: 1 } );  // include fields
-const out2 = obop.view( src2, { _id: 0, secret: 0 } );            // exclude fields
+const out1 = obop.view(array1, {name: 1, price: 1, stock: 1});  // include fields
+const out2 = obop.view(array2, {_id: 0, secret: 0});            // exclude fields
+
+// OR
+const out1 = array1.map(obop.view({name: 1, price: 1, stock: 1}));  // include fields
+const out2 = array2.map(obop.view({_id: 0, secret: 0}));            // exclude fields
 ```
 
 ## LINKS

@@ -1,7 +1,7 @@
 {
   "name": "obop",
   "description": "MongoDB-style object operators makes array manipulation easy: where/order/update/view",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "author": "https://github.com/kawanet",
   "bugs": {
     "url": "https://github.com/kawanet/obop/issues"
@@ -17,7 +17,8 @@
   "files": [
     "LICENSE",
     "README.md",
-    "build/*.min.js",
+    "browser/import.js",
+    "build/obop.min.js",
     "index.js",
     "lib/"
   ],
