@@ -87,7 +87,7 @@ function pusher(value) {
     var arr = item.arr;
     if (arr instanceof Array) {
       // OK
-    } else if ('undefined' == typeof arr) {
+    } else if ('undefined' === typeof arr) {
       arr = [];
     } else {
       // return item; // ignore (MongoDB does this)
@@ -104,15 +104,15 @@ function puller(value) {
     var arr = item.arr;
     if (arr instanceof Array) {
       // OK
-    } else if ('undefined' == typeof arr) {
+    } else if ('undefined' === typeof arr) {
       arr = [];
     } else {
       arr = [arr];
     }
     var after = arr.filter(function(item) {
-      return item != value;
+      return item !== value;
     });
-    if (arr.length != after.length) item.arr = after;
+    if (arr.length !== after.length) item.arr = after;
     return item;
   };
 }

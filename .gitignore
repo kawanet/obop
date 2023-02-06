@@ -1,4 +1,5 @@
 *.browserify.js
+*.tgz
 *~
 .DS_Store
 .Thumbs

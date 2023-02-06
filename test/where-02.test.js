@@ -1,3 +1,5 @@
+/* jshint eqeqeq:false */
+
 var sample3 = require('./data/sample3.json');
 var common = require('./common');
 

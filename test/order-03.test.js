@@ -1,6 +1,4 @@
-var obop = require('../');
 var sample4 = require('./data/sample4.json');
-var assert = require('assert');
 var common = require('./common');
 
 module.exports = function(prefix, checker) {
@@ -31,9 +29,9 @@ function tests(checker, sample) {
         return 1;
       } else if (afoo.bar < bfoo.bar) {
         return -1;
-      } else if (afoo.bar !== undef && bfoo.bar === undef) { // a.foo.bar > b.foo.bar == undef
+      } else if (afoo.bar !== undef && bfoo.bar === undef) { // a.foo.bar > b.foo.bar === undef
         return 1;
-      } else if (afoo.bar === undef && bfoo.bar !== undef) { // b.foo.bar > a.foo.bar == undef
+      } else if (afoo.bar === undef && bfoo.bar !== undef) { // b.foo.bar > a.foo.bar === undef
         return -1;
       }
       return ((a.name < b.name) ? -1 : (a.name > b.name) ? 1 : 0);
@@ -97,9 +95,9 @@ function tests(checker, sample) {
         return -1;
       } else if (afoo.bar < bfoo.bar) {
         return 1;
-      } else if (afoo.bar !== undef && bfoo.bar === undef) { // a.foo.bar > b.foo.bar == undef
+      } else if (afoo.bar !== undef && bfoo.bar === undef) { // a.foo.bar > b.foo.bar === undef
         return -1;
-      } else if (afoo.bar === undef && bfoo.bar !== undef) { // b.foo.bar > a.foo.bar == undef
+      } else if (afoo.bar === undef && bfoo.bar !== undef) { // b.foo.bar > a.foo.bar === undef
         return 1;
       }
       return ((a.name < b.name) ? 1 : (a.name > b.name) ? -1 : 0);
