@@ -7,11 +7,16 @@
     "url": "https://github.com/kawanet/obop/issues"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^28.0.1",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-multi-entry": "^6.0.1",
+    "@rollup/plugin-node-resolve": "^15.3.0",
     "browserify": "^17.0.1",
     "browserify-sed": "^0.8.0",
     "jsdoc": "^4.0.4",
     "jshint": "^2.13.6",
     "mocha": "^11.0.1",
+    "rollup": "^4.28.1",
     "terser": "^5.37.0"
   },
   "files": [
