@@ -1,6 +1,6 @@
 /*! common.js */
 
-var assert = require('assert');
+var assert = require('assert').strict;
 var obop = require('../');
 var common = exports;
 

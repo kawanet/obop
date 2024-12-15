@@ -1,24 +1,33 @@
 {
   "name": "obop",
   "description": "MongoDB-style object operators makes array manipulation easy: where/order/update/view",
-  "version": "0.2.3",
+  "version": "1.0.0",
   "author": "https://github.com/kawanet",
   "bugs": {
     "url": "https://github.com/kawanet/obop/issues"
   },
   "devDependencies": {
-    "browserify": "^17.0.0",
-    "browserify-sed": "^0.8.0",
-    "jsdoc": "^3.6.6",
+    "@rollup/plugin-commonjs": "^28.0.1",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-multi-entry": "^6.0.1",
+    "@rollup/plugin-node-resolve": "^15.3.0",
+    "assert": "^1.5.1",
+    "jsdoc": "^4.0.4",
     "jshint": "^2.13.6",
-    "mocha": "^10.2.0",
-    "terser": "^5.16.3"
+    "mocha": "^11.0.1",
+    "rollup": "^4.28.1",
+    "terser": "^5.37.0"
+  },
+  "exports": {
+    "import": "./build/obop.mjs",
+    "require": "./index.js"
   },
   "files": [
     "LICENSE",
     "README.md",
     "browser/import.js",
     "build/obop.min.js",
+    "build/obop.mjs",
     "index.js",
     "lib/"
   ],
@@ -52,7 +61,9 @@
   },
   "scripts": {
     "build": "make clean all",
+    "fixpack": "fixpack",
     "prepack": "npm run build && npm test",
     "test": "make test"
-  }
+  },
+  "type": "commonjs"
 }

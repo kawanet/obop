@@ -1,5 +1,5 @@
 var obop = require('../');
-var assert = require('assert');
+var assert = require('assert').strict;
 
 describe('system', function() {
   it('name', function(done) {

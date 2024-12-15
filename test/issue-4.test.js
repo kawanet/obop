@@ -3,7 +3,7 @@
 var assert = require("assert").strict;
 var obop = require("../");
 
-var TITLE = __filename.replace(/^.*\//, "") + ":";
+var TITLE = "issue-4.test.js";
 
 /* jshint mocha:true */
 

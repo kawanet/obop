@@ -6,7 +6,7 @@
 const assert = require("assert").strict;
 const obop = require("../");
 
-const TITLE = __filename.split("/").pop();
+const TITLE = "issue-7.test.js";
 
 /**
  * Prototype pollution found in view.js
