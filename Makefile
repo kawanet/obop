@@ -6,7 +6,7 @@ ESM_TEST=build/test.mjs
 
 SRC=index.js lib/*.js lib/*.json
 
-all: build/obop.min.js jsdoc build/test.browserify.js $(ESM_DEST)
+all: build/obop.min.js jsdoc build/test.browser.js $(ESM_DEST)
 
 clean:
 	/bin/rm -fr build/ gh-pages/docs/
@@ -19,15 +19,28 @@ test: $(ESM_TEST)
 lib/system.json: package.json
 	node -e 'require("fs").writeFileSync("lib/system.json", JSON.stringify(require("./").view({name:1, version:1})(require("./package.json")), null, 2))'
 
-build/obop.browserify.js: $(SRC)
-	./node_modules/.bin/browserify --list index.js
-	./node_modules/.bin/browserify -s obop index.js -o $@
+build/obop.browser.js: $(SRC) Makefile
+	./node_modules/.bin/rollup $< --file $@ --format iife --name obop \
+	--plugin @rollup/plugin-commonjs \
+	--plugin @rollup/plugin-json \
+	--plugin @rollup/plugin-node-resolve \
 
-build/test.browserify.js: $(SRC) test/*.js
-	./node_modules/.bin/browserify test/*.js -o $@ -t [ browserify-sed "s#require\(.\.\./.\)#require('../browser/import')#g" ]
-
-build/obop.min.js: build/obop.browserify.js
+build/obop.min.js: build/obop.browser.js
 	./node_modules/.bin/terser --compress --mangle --output $@ --comments false -- $<
+
+build/test.browser.js: $(CJS_TEST) build/assert.browser.js Makefile
+	./node_modules/.bin/rollup $(CJS_TEST) --format iife \
+	--plugin @rollup/plugin-commonjs \
+	--plugin @rollup/plugin-json \
+	--plugin @rollup/plugin-multi-entry \
+	--plugin @rollup/plugin-node-resolve \
+	--external 'assert,../' |\
+	perl -pe 's#^}\)\(require.*\);#})(assert, obop)#' > $@
+
+build/assert.browser.js: ./node_modules/assert/assert.js Makefile
+	./node_modules/.bin/rollup $< --file $@ --format iife --name assert \
+	--plugin @rollup/plugin-commonjs \
+	--plugin @rollup/plugin-node-resolve='{"browser":true, "preferBuiltins":false}'
 
 jsdoc: $(SRC)
 	./node_modules/.bin/jsdoc -d gh-pages/docs index.js lib/*.js
