@@ -143,7 +143,7 @@ const out2 = array2.map(obop.view({_id: 0, secret: 0}));            // exclude f
 
 ## LICENCE
 
-Copyright 2013-2023 @kawanet
+Copyright 2013-2024 @kawanet
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
