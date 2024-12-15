@@ -53,7 +53,7 @@ $(ESM_DEST): $(SRC) Makefile
 	--plugin @rollup/plugin-json \
 	--plugin @rollup/plugin-node-resolve \
 
-$(ESM_TEST): $(CJS_TEST) Makefile
+$(ESM_TEST): $(CJS_TEST) $(ESM_DEST) Makefile
 	./node_modules/.bin/rollup $(CJS_TEST) --format esm \
 	--plugin @rollup/plugin-commonjs \
 	--plugin @rollup/plugin-json \

@@ -2,6 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/obop.svg)](https://www.npmjs.com/package/obop) 
 [![Node.js CI](https://github.com/kawanet/obop/workflows/Node.js%20CI/badge.svg?branch=master)](https://github.com/kawanet/obop/actions/)
+[![gzip size](https://img.badgesize.io/https://unpkg.com/obop/build/obop.min.js?compression=gzip)](https://unpkg.com/obop/build/obop.min.js)
 
 MongoDB-style object operators makes array manipulation easy: where/order/update/view
 
