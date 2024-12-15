@@ -8,20 +8,35 @@ MongoDB-style object operators makes array manipulation easy: where/order/update
 
 ## SYNOPSIS
 
-### Node.js Environment
-
 ```js
-const obop = require('obop')();
+import obop from "obop";
+
 const array = [{a: 1}, {a: 2}, {a: 3}];
+
 const out = obop.where(array, {a: 2}); // => [ { a: 2 } ]
 
-// OR
 const out = array.filter(obop.where({a: 2})); // => [ { a: 2 } ]
 ```
 
-Install [obop](http://npmjs.org/package/obop) module via npm.
+Alternatively, you can generate the original `obop` function via the default export.
 
-### Browser Envorinment
+```js
+import obopInit from "obop";
+
+const obop = obopInit();
+
+const out = obop.where(array, {a: 2}); // => [ { a: 2 } ]
+```
+
+### CommonJS
+
+```js
+const obop = require('obop')();
+
+const out = obop.where(array, {a: 2}); // => [ { a: 2 } ]
+```
+
+### Browser Environment
 
 ```html
 <script src="obop.min.js"></script>
